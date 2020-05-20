@@ -5,22 +5,22 @@
  */
 package ventanas;
 
-
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import proyectofinal.conectarBBDD;
 
-
 /**
  *
  * @author ADRI
  */
 public class registro extends javax.swing.JFrame {
-    conectarBBDD con=new conectarBBDD();
-    String genero="";
-    String orsex="";
+
+    conectarBBDD con = new conectarBBDD();
+    String genero = "";
+    String orsex = "";
+
     /**
      * Creates new form registro
      */
@@ -64,6 +64,7 @@ public class registro extends javax.swing.JFrame {
         contraseñaField = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
         usuarioField = new javax.swing.JTextField();
+        jLabel14 = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
         jDialog1.getContentPane().setLayout(jDialog1Layout);
@@ -184,6 +185,8 @@ public class registro extends javax.swing.JFrame {
             }
         });
 
+        jLabel14.setText("YYYY/MM/DD");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -229,33 +232,36 @@ public class registro extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(aceptarBut))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jLabel13)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(usuarioField))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jLabel12)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(contraseñaField))
+                                .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                    .addComponent(jLabel1)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(nombreField))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jLabel2)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(surnameField))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                    .addComponent(jLabel4)
+                                    .addGap(34, 34, 34)
+                                    .addComponent(provinciaField, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel13)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(usuarioField))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel12)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(contraseñaField))
-                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(18, 18, 18)
-                                .addComponent(nombreField))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(18, 18, 18)
-                                .addComponent(surnameField))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addComponent(jLabel3)
                                 .addGap(18, 18, 18)
-                                .addComponent(dateField, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addGap(34, 34, 34)
-                                .addComponent(provinciaField, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(dateField, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel14)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(28, 28, 28))
         );
@@ -281,7 +287,9 @@ public class registro extends javax.swing.JFrame {
                 .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(dateField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(dateField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel14)))
                 .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
@@ -322,23 +330,23 @@ public class registro extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void homoCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homoCheckActionPerformed
-        orsex="homosexual";
+        orsex = "homosexual";
     }//GEN-LAST:event_homoCheckActionPerformed
 
     private void mascCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mascCheckActionPerformed
-        genero="masculino";
+        genero = "masculino";
     }//GEN-LAST:event_mascCheckActionPerformed
 
     private void biCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_biCheckActionPerformed
-        orsex="bisexual";
+        orsex = "bisexual";
     }//GEN-LAST:event_biCheckActionPerformed
 
     private void heteCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_heteCheckActionPerformed
-        orsex="heterosexual";
+        orsex = "heterosexual";
     }//GEN-LAST:event_heteCheckActionPerformed
 
     private void femCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_femCheckActionPerformed
-        genero="femenino";
+        genero = "femenino";
     }//GEN-LAST:event_femCheckActionPerformed
 
     private void provinciaFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_provinciaFieldActionPerformed
@@ -354,31 +362,31 @@ public class registro extends javax.swing.JFrame {
     }//GEN-LAST:event_surnameFieldActionPerformed
 
     private void nombreFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nombreFieldActionPerformed
-        
+
     }//GEN-LAST:event_nombreFieldActionPerformed
 
     private void atrasButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atrasButActionPerformed
-        login ln=new login();
+        login ln = new login();
         ln.setVisible(true);
         ln.pack();
         this.dispose();
     }//GEN-LAST:event_atrasButActionPerformed
 
     private void aceptarButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aceptarButActionPerformed
-         try {
-            PreparedStatement insNuevoUsuario=con.getConnection().prepareStatement("INSERT INTO usuarios VALUES (?,?,?,?,?,?,?,?,?,?)");
-            insNuevoUsuario.setInt(1,0);
-            insNuevoUsuario.setString(2,usuarioField.getText());
-            insNuevoUsuario.setString(3,contraseñaField.getText());
-            insNuevoUsuario.setString(4,nombreField.getText());
-            insNuevoUsuario.setString(5,surnameField.getText()); 
-            insNuevoUsuario.setString(6,surnameField.getText()); 
-            insNuevoUsuario.setString(7,genero); 
-            insNuevoUsuario.setString(8,orsex); 
-            insNuevoUsuario.setString(9,provinciaField.getText()); 
-            insNuevoUsuario.setString(10,"hola");
+        try {
+            PreparedStatement insNuevoUsuario = con.getConnection().prepareStatement("INSERT INTO usuarios VALUES (?,?,?,?,?,?,?,?,?,?)");
+            insNuevoUsuario.setInt(1, 0);
+            insNuevoUsuario.setString(2, usuarioField.getText());
+            insNuevoUsuario.setString(3, contraseñaField.getText());
+            insNuevoUsuario.setString(4, nombreField.getText());
+            insNuevoUsuario.setString(5, surnameField.getText());
+            insNuevoUsuario.setString(6, genero);
+            insNuevoUsuario.setString(7, orsex);
+            insNuevoUsuario.setString(8, provinciaField.getText());
+            insNuevoUsuario.setString(9, dateField.getText());
+            insNuevoUsuario.setString(10, "hola");
             insNuevoUsuario.executeUpdate();
-         } catch (SQLException ex) {
+        } catch (SQLException ex) {
             Logger.getLogger(registro.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_aceptarButActionPerformed
@@ -441,6 +449,7 @@ public class registro extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
