@@ -5,8 +5,15 @@
  */
 package ventanas;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import proyectofinal.InicioSesion;
+import proyectofinal.conectarBBDD;
 
 /**
  *
@@ -14,6 +21,7 @@ import proyectofinal.InicioSesion;
  */
 public class login extends javax.swing.JFrame {
     static InicioSesion objses=new InicioSesion();
+    conectarBBDD con = new conectarBBDD();
     /**
      * Creates new form interfaz
      */
@@ -114,8 +122,7 @@ public class login extends javax.swing.JFrame {
     private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
         registro rg=new registro();
         rg.setVisible(true);
-        rg.pack();
-        rg.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);        
+        rg.pack();        
         this.dispose();        
     }//GEN-LAST:event_registerButtonActionPerformed
 
@@ -128,10 +135,40 @@ public class login extends javax.swing.JFrame {
     }//GEN-LAST:event_userFieldActionPerformed
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
-       String username=userField.getText();
-       String password=passwordField.getText();
-       objses.setUsuario(username);
-       objses.setContraseña(password);
+        try {
+            String username=userField.getText();
+            String password=passwordField.getText();
+            Statement st=con.getConnection().createStatement();   
+            ResultSet ExisteUsu=st.executeQuery("select * from usuarios where nick='"+username+"'");
+            if (!username.equals("")){    
+                if (ExisteUsu.next()){
+                    if(ExisteUsu.getString("contraseña").equals(password)){
+                        usuario usu=new usuario();
+                        usu.setNick(ExisteUsu.getString("nick"));
+                        usu.setContraseña(ExisteUsu.getString("contraseña"));
+                        usu.setNombre(ExisteUsu.getString("nombre"));
+                        usu.setApellidos(ExisteUsu.getString("apellidos"));
+                        usu.setGenero(ExisteUsu.getString("genero"));
+                        usu.setOrSex(ExisteUsu.getString("orSex"));
+                        usu.setProvincia(ExisteUsu.getString("provincia"));
+                        usu.setFechaNac(ExisteUsu.getString("fechaNac"));
+                        usu.setDescripcion(ExisteUsu.getString("descripcion"));
+                        menuPrincipal menu=new menuPrincipal();
+                        menu.setVisible(true);
+                        menu.pack();
+                        this.dispose();
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Contraseña incorrecta");
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(null, "Usuario no encontrado");
+                }
+            }else{
+                JOptionPane.showMessageDialog(null, "Introduzca algún nombre de usuario");
+            }    
+        } catch (SQLException ex) {
+            Logger.getLogger(login.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_loginButtonActionPerformed
 
     /**

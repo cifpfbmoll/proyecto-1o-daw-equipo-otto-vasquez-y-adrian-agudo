@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import proyectofinal.conectarBBDD;
+import java.sql.*;
 
 /**
  *
@@ -201,7 +202,7 @@ public class registro extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(20, 20, 20)
                                 .addComponent(mascCheck)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 206, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -331,22 +332,30 @@ public class registro extends javax.swing.JFrame {
 
     private void homoCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homoCheckActionPerformed
         orsex = "homosexual";
+        biCheck.setSelected(false);
+        heteCheck.setSelected(false);
     }//GEN-LAST:event_homoCheckActionPerformed
 
     private void mascCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mascCheckActionPerformed
         genero = "masculino";
+        femCheck.setSelected(false);
     }//GEN-LAST:event_mascCheckActionPerformed
 
     private void biCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_biCheckActionPerformed
         orsex = "bisexual";
+        homoCheck.setSelected(false);
+        heteCheck.setSelected(false);
     }//GEN-LAST:event_biCheckActionPerformed
 
     private void heteCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_heteCheckActionPerformed
         orsex = "heterosexual";
+        biCheck.setSelected(false);
+        homoCheck.setSelected(false);
     }//GEN-LAST:event_heteCheckActionPerformed
 
     private void femCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_femCheckActionPerformed
         genero = "femenino";
+        mascCheck.setSelected(false);
     }//GEN-LAST:event_femCheckActionPerformed
 
     private void provinciaFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_provinciaFieldActionPerformed
@@ -373,9 +382,13 @@ public class registro extends javax.swing.JFrame {
     }//GEN-LAST:event_atrasButActionPerformed
 
     private void aceptarButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aceptarButActionPerformed
+        int maxIdVar; 
         try {
+            Statement st=con.getConnection().createStatement();
+            ResultSet maxId=st.executeQuery("select coalesce(max(id), -1) as maxId from usuarios");
+            maxId.next();
             PreparedStatement insNuevoUsuario = con.getConnection().prepareStatement("INSERT INTO usuarios VALUES (?,?,?,?,?,?,?,?,?,?)");
-            insNuevoUsuario.setInt(1, 0);
+            insNuevoUsuario.setInt(1, (maxId.getInt("maxId")+1));   
             insNuevoUsuario.setString(2, usuarioField.getText());
             insNuevoUsuario.setString(3, contraseñaField.getText());
             insNuevoUsuario.setString(4, nombreField.getText());
@@ -384,8 +397,9 @@ public class registro extends javax.swing.JFrame {
             insNuevoUsuario.setString(7, orsex);
             insNuevoUsuario.setString(8, provinciaField.getText());
             insNuevoUsuario.setString(9, dateField.getText());
-            insNuevoUsuario.setString(10, "hola");
+            insNuevoUsuario.setString(10, "");
             insNuevoUsuario.executeUpdate();
+            limpiar();
         } catch (SQLException ex) {
             Logger.getLogger(registro.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -432,6 +446,20 @@ public class registro extends javax.swing.JFrame {
                 new registro().setVisible(true);
             }
         });
+    }
+    
+    public void limpiar(){
+        heteCheck.setSelected(false);
+        biCheck.setSelected(false);
+        homoCheck.setSelected(false);
+        mascCheck.setSelected(false);
+        femCheck.setSelected(false);
+        usuarioField.setText("");
+        contraseñaField.setText("");
+        nombreField.setText("");
+        surnameField.setText("");
+        dateField.setText("");
+        provinciaField.setText("");
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
