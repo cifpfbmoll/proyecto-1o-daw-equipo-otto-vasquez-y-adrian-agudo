@@ -10,14 +10,22 @@ package ventanas;
  * @author ADRI
  */
 public class menuPrincipal extends javax.swing.JFrame {
-
+    private usuario usu;
     /**
      * Creates new form menuPrincipal
      */
     public menuPrincipal() {
         initComponents();
     }
-
+    
+    public menuPrincipal(usuario usu){
+        this.usu=usu;
+        initComponents();
+    }
+    
+    public void setLabel(){
+        nomUsuSalida.setText(this.usu.getNick());
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -91,7 +99,6 @@ public class menuPrincipal extends javax.swing.JFrame {
                 new menuPrincipal().setVisible(true);
             }
         });
-        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

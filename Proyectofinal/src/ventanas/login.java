@@ -153,9 +153,10 @@ public class login extends javax.swing.JFrame {
                         usu.setProvincia(ExisteUsu.getString("provincia"));
                         usu.setFechaNac(ExisteUsu.getString("fechaNac"));
                         usu.setDescripcion(ExisteUsu.getString("descripcion"));
-                        menuPrincipal menu=new menuPrincipal();
+                        menuPrincipal menu=new menuPrincipal(usu);
                         menu.setVisible(true);
                         menu.pack();
+                        menu.setLabel();
                         this.dispose();
                     }else{
                         JOptionPane.showMessageDialog(null, "Contraseña incorrecta");
