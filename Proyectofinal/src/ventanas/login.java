@@ -27,7 +27,7 @@ public class login extends javax.swing.JFrame {
      */
     public login() {
         initComponents();
-        setSize(600, 400);
+        
     }
 
     /**
@@ -49,33 +49,29 @@ public class login extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setSize(new java.awt.Dimension(0, 0));
-        getContentPane().setLayout(null);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Usuario:");
-        getContentPane().add(jLabel1);
-        jLabel1.setBounds(150, 90, 60, 20);
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 120, -1, -1));
 
         userField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 userFieldActionPerformed(evt);
             }
         });
-        getContentPane().add(userField);
-        userField.setBounds(210, 90, 200, 20);
+        getContentPane().add(userField, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 120, 200, -1));
 
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Contraseña:");
-        getContentPane().add(jLabel2);
-        jLabel2.setBounds(130, 130, 80, 20);
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 160, -1, -1));
 
         passwordField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 passwordFieldActionPerformed(evt);
             }
         });
-        getContentPane().add(passwordField);
-        passwordField.setBounds(210, 130, 200, 20);
+        getContentPane().add(passwordField, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 160, 200, -1));
 
         loginButton.setText("LOGIN");
         loginButton.addActionListener(new java.awt.event.ActionListener() {
@@ -83,8 +79,7 @@ public class login extends javax.swing.JFrame {
                 loginButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(loginButton);
-        loginButton.setBounds(250, 200, 110, 23);
+        getContentPane().add(loginButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 230, 100, -1));
 
         registerButton.setText("REGISTRATE");
         registerButton.addActionListener(new java.awt.event.ActionListener() {
@@ -92,12 +87,10 @@ public class login extends javax.swing.JFrame {
                 registerButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(registerButton);
-        registerButton.setBounds(250, 240, 110, 23);
+        getContentPane().add(registerButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 270, 100, -1));
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/login.png"))); // NOI18N
-        getContentPane().add(jLabel3);
-        jLabel3.setBounds(0, 0, 950, 630);
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 600, 400));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
