@@ -309,7 +309,13 @@ public class registro extends javax.swing.JFrame {
             if (!(usuarioField.getText().equals("")||contraseñaField.getText().equals("")||nombreField.getText().equals("")||surnameField.getText().equals("")||genero.equals("")||orsex.equals("")||provinciaField.getText().equals("")||dateField.getText().equals(""))){
                 insNuevoUsuario.setInt(1, (maxId.getInt("maxId")+1));   
                 if (usuarioField.getText().length()<=10){
-                    insNuevoUsuario.setString(2, usuarioField.getText());
+                    Statement st2=con.getConnection().createStatement();
+                    ResultSet usuarios=st2.executeQuery("select * from usuarios where nick ='"+usuarioField.getText()+"'");
+                    if (!usuarios.next()){
+                        insNuevoUsuario.setString(2, usuarioField.getText());
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Ya existe el usuario");
+                    }
                 }else{
                     JOptionPane.showMessageDialog(null, "Nombre de usuario demasiado extenso");
                 }
