@@ -5,6 +5,7 @@
  */
 package ventanas;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import proyectofinal.conectarBBDD;
@@ -201,7 +202,8 @@ public class opciones extends javax.swing.JFrame {
                 if (input.length()<=10){
                     PreparedStatement update = con.getConnection().prepareStatement("UPDATE usuarios SET nick = ? WHERE id = ?");
                     update.setString(1, input);
-                    update.setString(2, usu.);
+                    update.setInt(2, usu.getId());
+                    update.executeUpdate();
                     System.out.print(usu.getNick());
                 }else{
                     JOptionPane.showMessageDialog(null, "Campo demasiado extenso");

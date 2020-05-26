@@ -299,6 +299,7 @@ public class registro extends javax.swing.JFrame {
 
     private void aceptarButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aceptarButActionPerformed
         int maxIdVar; 
+        String usuarioVar;
         try {
             Pattern patron = Pattern.compile("[0-9]{4}/[0-9]{2}/[0-9]{2}");
             Matcher mat= patron.matcher(dateField.getText());
@@ -309,7 +310,15 @@ public class registro extends javax.swing.JFrame {
             if (!(usuarioField.getText().equals("")||contraseñaField.getText().equals("")||nombreField.getText().equals("")||surnameField.getText().equals("")||genero.equals("")||orsex.equals("")||provinciaField.getText().equals("")||dateField.getText().equals(""))){
                 insNuevoUsuario.setInt(1, (maxId.getInt("maxId")+1));   
                 if (usuarioField.getText().length()<=10){
-                    insNuevoUsuario.setString(2, usuarioField.getText());
+                    Statement st2=con.getConnection().createStatement();
+                    ResultSet usuarios=st2.executeQuery("select * from usuarios where nick ='"+usuarioField.getText()+"'");
+                    usuarios.next();
+                    usuarioVar=usuarios.getString("nick");
+                    if (usuarioVar.isEmpty()){
+                        insNuevoUsuario.setString(2, usuarioField.getText());
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Ya existe el usuario");
+                    }
                 }else{
                     JOptionPane.showMessageDialog(null, "Nombre de usuario demasiado extenso");
                 }

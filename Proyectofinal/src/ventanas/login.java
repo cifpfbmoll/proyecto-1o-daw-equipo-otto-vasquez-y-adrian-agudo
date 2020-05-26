@@ -120,6 +120,7 @@ public class login extends javax.swing.JFrame {
                 if (ExisteUsu.next()){
                     if(ExisteUsu.getString("contraseña").equals(password)){
                         usuario usu=new usuario();
+                        usu.setId(ExisteUsu.getInt("id"));
                         usu.setNick(ExisteUsu.getString("nick"));
                         usu.setContraseña(ExisteUsu.getString("contraseña"));
                         usu.setNombre(ExisteUsu.getString("nombre"));

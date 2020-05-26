@@ -46,24 +46,19 @@
                                       <Component id="camContraBut" min="-2" pref="188" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
-                              <Group type="102" alignment="1" attributes="0">
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="camSexoBut" max="32767" attributes="0"/>
-                                      <Component id="camEdadBut" max="32767" attributes="0"/>
-                                      <Component id="camLugarBut" min="-2" pref="194" max="-2" attributes="0"/>
-                                  </Group>
+                              <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="camSexoBut" max="32767" attributes="0"/>
+                                  <Component id="camEdadBut" max="32767" attributes="0"/>
+                                  <Component id="camLugarBut" min="-2" pref="194" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace min="-2" pref="177" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="camGenBut" pref="255" max="32767" attributes="0"/>
-                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                  <Component id="camOrSexBut" alignment="0" pref="255" max="32767" attributes="0"/>
-                                  <Component id="camDescBut" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="camApellidosBut" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="camNombreBut" alignment="0" max="32767" attributes="0"/>
-                              </Group>
+                              <Component id="camOrSexBut" alignment="0" pref="255" max="32767" attributes="0"/>
+                              <Component id="camDescBut" alignment="0" max="32767" attributes="0"/>
+                              <Component id="camApellidosBut" alignment="0" max="32767" attributes="0"/>
+                              <Component id="camNombreBut" alignment="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
