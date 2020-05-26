@@ -312,9 +312,7 @@ public class registro extends javax.swing.JFrame {
                 if (usuarioField.getText().length()<=10){
                     Statement st2=con.getConnection().createStatement();
                     ResultSet usuarios=st2.executeQuery("select * from usuarios where nick ='"+usuarioField.getText()+"'");
-                    usuarios.next();
-                    usuarioVar=usuarios.getString("nick");
-                    if (usuarioVar.isEmpty()){
+                    if (!usuarios.next()){
                         insNuevoUsuario.setString(2, usuarioField.getText());
                     }else{
                         JOptionPane.showMessageDialog(null, "Ya existe el usuario");
