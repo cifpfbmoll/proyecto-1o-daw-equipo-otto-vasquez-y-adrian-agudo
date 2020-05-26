@@ -4,9 +4,15 @@
  * and open the template in the editor.
  */
 package ventanas;
+import com.mysql.jdbc.MysqlDataTruncation;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import proyectofinal.conectarBBDD;
 /**
@@ -54,7 +60,6 @@ public class opciones extends javax.swing.JFrame {
         camNombreBut = new javax.swing.JButton();
         camApellidosBut = new javax.swing.JButton();
         camDescBut = new javax.swing.JButton();
-        camOrSexBut = new javax.swing.JButton();
         camGenBut = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         camLugarBut = new javax.swing.JButton();
@@ -68,6 +73,11 @@ public class opciones extends javax.swing.JFrame {
         jLabel2.setText("Modificar perfíl");
 
         camContraBut.setText("Cambiar contraseña");
+        camContraBut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                camContraButActionPerformed(evt);
+            }
+        });
 
         camNombreUsuBut.setText("Cambiar nombre de usuario");
         camNombreUsuBut.addActionListener(new java.awt.event.ActionListener() {
@@ -88,6 +98,11 @@ public class opciones extends javax.swing.JFrame {
         });
 
         camApellidosBut.setText("Cambiar apellidos");
+        camApellidosBut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                camApellidosButActionPerformed(evt);
+            }
+        });
 
         camDescBut.setText("Cambiar descripción");
         camDescBut.addActionListener(new java.awt.event.ActionListener() {
@@ -96,9 +111,12 @@ public class opciones extends javax.swing.JFrame {
             }
         });
 
-        camOrSexBut.setText("Cambiar orientación sexual");
-
         camGenBut.setText("Cambiar género");
+        camGenBut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                camGenButActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("Modificar filtros de búsqueda");
 
@@ -128,33 +146,32 @@ public class opciones extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(314, 314, 314))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel3)
-                        .addComponent(jLabel2)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                    .addGap(43, 43, 43)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                            .addGap(43, 43, 43)
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                    .addComponent(camResiBut, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                    .addComponent(camFechaNacBut, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addComponent(camNombreUsuBut)
+                                                .addComponent(camContraBut, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(camResiBut, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(camFechaNacBut, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addComponent(camNombreUsuBut)
-                                        .addComponent(camContraBut, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(camSexoBut, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(camEdadBut, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(camLugarBut, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGap(177, 177, 177)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(camGenBut, javax.swing.GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(camOrSexBut, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE)
-                                    .addComponent(camDescBut, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(camApellidosBut, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(camNombreBut, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))))
+                                            .addComponent(camSexoBut, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(camEdadBut, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(camLugarBut, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(jLabel3))
+                                .addGap(154, 154, 154)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(camDescBut, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(camGenBut, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(camApellidosBut, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(camNombreBut, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(23, 23, 23))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -178,10 +195,8 @@ public class opciones extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(camFechaNacBut)
-                    .addComponent(camOrSexBut))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(camGenBut)
-                .addGap(38, 38, 38)
+                    .addComponent(camGenBut))
+                .addGap(82, 82, 82)
                 .addComponent(jLabel3)
                 .addGap(18, 18, 18)
                 .addComponent(camLugarBut)
@@ -199,12 +214,23 @@ public class opciones extends javax.swing.JFrame {
         try{
             String input = JOptionPane.showInputDialog("Introducir nuevo NOMBRE DE USUARIO");
             if (!input.equals("")){
-                if (input.length()<=10){
-                    PreparedStatement update = con.getConnection().prepareStatement("UPDATE usuarios SET nick = ? WHERE id = ?");
-                    update.setString(1, input);
-                    update.setInt(2, usu.getId());
-                    update.executeUpdate();
-                    System.out.print(usu.getNick());
+                if (input.length()<=10){ 
+                    Statement st2=con.getConnection().createStatement();
+                    ResultSet usuarios=st2.executeQuery("select * from usuarios where nick ='"+input+"'");
+                        if (!usuarios.next()){
+                            PreparedStatement update = con.getConnection().prepareStatement("UPDATE usuarios SET nick = ? WHERE id = ?");
+                            update.setString(1, input);
+                            update.setInt(2, usu.getId());
+                            update.executeUpdate();
+                            usu.setNick(input);
+                            JOptionPane.showMessageDialog(null, "Se realizó el cambio correctamente");
+                        }else{
+                            if (usu.getNick().equals(input)){
+                                 JOptionPane.showMessageDialog(null, "Debe de introducir un nuevo campo distinto al que ya tenia");
+                            }else{
+                                JOptionPane.showMessageDialog(null, "Ya existe el usuario");
+                            }
+                        }
                 }else{
                     JOptionPane.showMessageDialog(null, "Campo demasiado extenso");
                 }
@@ -217,20 +243,144 @@ public class opciones extends javax.swing.JFrame {
     }//GEN-LAST:event_camNombreUsuButActionPerformed
 
     private void camNombreButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_camNombreButActionPerformed
-        // TODO add your handling code here:
+         try{
+            String input = JOptionPane.showInputDialog("Introducir nuevo NOMBRE");
+            if (!input.equals("")){
+                if (input.length()<=20){ 
+                    PreparedStatement update = con.getConnection().prepareStatement("UPDATE usuarios SET nombre = ? WHERE id = ?");
+                    update.setString(1, input);
+                    update.setInt(2, usu.getId());
+                    update.executeUpdate();
+                    usu.setNombre(input);
+                    JOptionPane.showMessageDialog(null, "Se realizó el cambio correctamente");
+                }else{
+                    JOptionPane.showMessageDialog(null, "Campo demasiado extenso");
+                }
+            }else{
+                 JOptionPane.showMessageDialog(null, "El campo no puede estar vacío");
+            }
+        }catch(SQLException ex){
+            System.out.println("Hubo un problema");
+        }
     }//GEN-LAST:event_camNombreButActionPerformed
 
     private void camDescButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_camDescButActionPerformed
-        // TODO add your handling code here:
+        try {
+            String input = JOptionPane.showInputDialog("Introducir nueva DESCRIPCIÓN");
+            if (!input.equals("")) {
+                PreparedStatement update = con.getConnection().prepareStatement("UPDATE usuarios SET descripcion = ? WHERE id = ?");
+                update.setString(1, input);
+                update.setInt(2, usu.getId());
+                update.executeUpdate();
+                usu.setDescripcion(input);
+                JOptionPane.showMessageDialog(null, "Se realizó el cambio correctamente");
+            } else {
+                JOptionPane.showMessageDialog(null, "El campo no puede estar vacío");
+            }
+        } catch (SQLException ex) {
+            System.out.println("Hubo un problema");
+        }
     }//GEN-LAST:event_camDescButActionPerformed
 
     private void camLugarButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_camLugarButActionPerformed
-        // TODO add your handling code here:
+        try {
+            String input = JOptionPane.showInputDialog("Introducir nueva PROVINCIA");
+            if (!input.equals("")) {
+                PreparedStatement update = con.getConnection().prepareStatement("UPDATE usuarios SET provincia = ? WHERE id = ?");
+                update.setString(1, input);
+                update.setInt(2, usu.getId());
+                update.executeUpdate();
+                usu.setProvincia(input);
+                JOptionPane.showMessageDialog(null, "Se realizó el cambio correctamente");
+            } else {
+                JOptionPane.showMessageDialog(null, "El campo no puede estar vacío");
+            }
+        } catch (SQLException ex) {
+            System.out.println("Hubo un problema");
+        }
     }//GEN-LAST:event_camLugarButActionPerformed
 
     private void camEdadButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_camEdadButActionPerformed
-        // TODO add your handling code here:
+        try {
+            String input = JOptionPane.showInputDialog("Introducir nueva FECHA DE NACIMIENTO");
+            Pattern patron = Pattern.compile("[0-9]{4}/[0-9]{2}/[0-9]{2}");
+            Matcher mat = patron.matcher(input);
+            if (!input.equals("")) {
+                if (mat.matches()){
+                    PreparedStatement update = con.getConnection().prepareStatement("UPDATE usuarios SET fechaNac = ? WHERE id = ?");
+                    update.setString(1, input);
+                    update.setInt(2, usu.getId());
+                    update.executeUpdate();
+                    usu.setFechaNac(input);
+                    JOptionPane.showMessageDialog(null, "Se realizó el cambio correctamente");
+                }else{
+                    JOptionPane.showMessageDialog(null, "La fecha no se adecua al formato (YYYY-MM-DD)");
+                }  
+            } else {
+                JOptionPane.showMessageDialog(null, "El campo no puede estar vacío");
+            }
+        }catch (MysqlDataTruncation ex2 ){
+            JOptionPane.showMessageDialog(null, "Fecha errónea");    
+        } catch (SQLException ex) {
+            System.out.println("Hubo un problema");
+        }
     }//GEN-LAST:event_camEdadButActionPerformed
+
+    private void camApellidosButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_camApellidosButActionPerformed
+        try {
+            String input = JOptionPane.showInputDialog("Introducir nuevos APELLIDOS");
+            if (!input.equals("")) {
+                PreparedStatement update = con.getConnection().prepareStatement("UPDATE usuarios SET apellidos = ? WHERE id = ?");
+                update.setString(1, input);
+                update.setInt(2, usu.getId());
+                update.executeUpdate();
+                usu.setApellidos(input);
+                JOptionPane.showMessageDialog(null, "Se realizó el cambio correctamente");
+            } else {
+                JOptionPane.showMessageDialog(null, "El campo no puede estar vacío");
+            }
+        } catch (SQLException ex) {
+            System.out.println("Hubo un problema");
+        }
+    }//GEN-LAST:event_camApellidosButActionPerformed
+
+    private void camGenButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_camGenButActionPerformed
+        try {
+            String anterior=usu.getGenero();
+            System.out.println(anterior);
+            if(anterior.equals("masculino")){
+                PreparedStatement update = con.getConnection().prepareStatement("UPDATE usuarios SET genero = ? WHERE id = ?");
+                update.setString(1, "femenino");
+                update.setInt(2, usu.getId());    
+                usu.setGenero("femenino");
+            }else{
+                PreparedStatement update = con.getConnection().prepareStatement("UPDATE usuarios SET genero = ? WHERE id = ?");
+                update.setString(1, "masculino");
+                update.setInt(2, usu.getId());   
+                usu.setGenero("masculino");
+            }
+            JOptionPane.showMessageDialog(null, "Se cambió de género de "+anterior+" a "+usu.getGenero());
+        } catch (SQLException ex) {
+                Logger.getLogger(opciones.class.getName()).log(Level.SEVERE, null, ex);
+        }    
+    }//GEN-LAST:event_camGenButActionPerformed
+
+    private void camContraButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_camContraButActionPerformed
+        try {
+            String input = JOptionPane.showInputDialog("Introducir nueva CONTRASEÑA");
+            if (!input.equals("")) {
+                PreparedStatement update = con.getConnection().prepareStatement("UPDATE usuarios SET contraseña = ? WHERE id = ?");
+                update.setString(1, input);
+                update.setInt(2, usu.getId());
+                update.executeUpdate();
+                JOptionPane.showMessageDialog(null, "Se realizó el cambio correctamente");
+            } else {
+                JOptionPane.showMessageDialog(null, "El campo no puede estar vacío");
+            }
+        } catch (SQLException ex) {
+            System.out.println("Hubo un problema");
+        }
+    }//GEN-LAST:event_camContraButActionPerformed
 
     /**
      * @param args the command line arguments
@@ -277,7 +427,6 @@ public class opciones extends javax.swing.JFrame {
     private javax.swing.JButton camLugarBut;
     private javax.swing.JButton camNombreBut;
     private javax.swing.JButton camNombreUsuBut;
-    private javax.swing.JButton camOrSexBut;
     private javax.swing.JButton camResiBut;
     private javax.swing.JButton camSexoBut;
     private javax.swing.JLabel jLabel1;
