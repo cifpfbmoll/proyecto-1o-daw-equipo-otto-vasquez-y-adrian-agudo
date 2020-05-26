@@ -23,19 +23,92 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="165" max="-2" attributes="0"/>
-              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="175" max="32767" attributes="0"/>
+          <Group type="102" attributes="0">
+              <EmptySpace max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="1" attributes="0">
+                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="314" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="103" alignment="1" groupAlignment="0" attributes="0">
+                      <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="1" attributes="0">
+                                      <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="camResiBut" max="32767" attributes="0"/>
+                                          <Component id="camFechaNacBut" min="-2" pref="188" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Component id="camNombreUsuBut" min="-2" max="-2" attributes="0"/>
+                                      <Component id="camContraBut" min="-2" pref="188" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Component id="camSexoBut" max="32767" attributes="0"/>
+                                      <Component id="camEdadBut" max="32767" attributes="0"/>
+                                      <Component id="camLugarBut" min="-2" pref="194" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                          </Group>
+                          <EmptySpace min="-2" pref="177" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="camGenBut" pref="255" max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                  <Component id="camOrSexBut" alignment="0" pref="255" max="32767" attributes="0"/>
+                                  <Component id="camDescBut" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="camApellidosBut" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="camNombreBut" alignment="0" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                      </Group>
+                  </Group>
+              </Group>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="269" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
+              <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="camNombreBut" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="camNombreUsuBut" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="camApellidosBut" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="camContraBut" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="camResiBut" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="camDescBut" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="camFechaNacBut" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="camOrSexBut" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="camGenBut" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
+              <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="camLugarBut" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="camEdadBut" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="camSexoBut" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="123" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -44,6 +117,91 @@
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
         <Property name="text" type="java.lang.String" value="OPCIONES"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel2">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Modificar perf&#xed;l"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="camContraBut">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Cambiar contrase&#xf1;a"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="camNombreUsuBut">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Cambiar nombre de usuario"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="camNombreUsuButActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="camResiBut">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Cambiar residencia"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="camFechaNacBut">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Cambiar fecha nacimiento"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="camNombreBut">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Cambiar nombre"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="camNombreButActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="camApellidosBut">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Cambiar apellidos"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="camDescBut">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Cambiar descripci&#xf3;n"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="camDescButActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="camOrSexBut">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Cambiar orientaci&#xf3;n sexual"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="camGenBut">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Cambiar g&#xe9;nero"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel3">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Modificar filtros de b&#xfa;squeda"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="camLugarBut">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Lugar"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="camLugarButActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="camEdadBut">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Edad"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="camEdadButActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="camSexoBut">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Sexo"/>
       </Properties>
     </Component>
   </SubComponents>
