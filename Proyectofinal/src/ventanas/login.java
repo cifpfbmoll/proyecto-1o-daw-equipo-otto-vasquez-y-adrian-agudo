@@ -97,8 +97,7 @@ public class login extends javax.swing.JFrame {
       
     private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
         registro rg=new registro();
-        rg.setVisible(true);
-        rg.pack();        
+        rg.setVisible(true);        
         this.dispose();        
     }//GEN-LAST:event_registerButtonActionPerformed
 
@@ -132,7 +131,6 @@ public class login extends javax.swing.JFrame {
                         usu.setDescripcion(ExisteUsu.getString("descripcion"));
                         menuPrincipal menu=new menuPrincipal(usu);
                         menu.setVisible(true);
-                        menu.pack();
                         menu.setLabel();
                         this.dispose();
                     }else{

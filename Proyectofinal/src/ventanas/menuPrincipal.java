@@ -93,6 +93,7 @@ public class menuPrincipal extends javax.swing.JFrame {
         opciones opc=new opciones(usu);
         opc.setVisible(true);
         opc.pack();
+        this.dispose();
     }//GEN-LAST:event_opcButonActionPerformed
 
     /**

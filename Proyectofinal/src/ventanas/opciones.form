@@ -24,7 +24,7 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace pref="12" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
@@ -33,34 +33,38 @@
                   <Group type="102" alignment="1" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="1" attributes="0">
-                                              <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
-                                                  <Component id="camResiBut" max="32767" attributes="0"/>
-                                                  <Component id="camFechaNacBut" min="-2" pref="188" max="-2" attributes="0"/>
+                          <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                              <Component id="atrasBut" min="-2" max="-2" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="1" attributes="0">
+                                                  <Component id="camResiBut" alignment="1" min="-2" pref="188" max="-2" attributes="0"/>
+                                                  <Component id="camNombreUsuBut" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="camContraBut" min="-2" pref="188" max="-2" attributes="0"/>
                                               </Group>
-                                              <Component id="camNombreUsuBut" min="-2" max="-2" attributes="0"/>
-                                              <Component id="camContraBut" min="-2" pref="188" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
+                                              <Component id="camSexoBut" max="32767" attributes="0"/>
+                                              <Component id="camEdadBut" max="32767" attributes="0"/>
+                                              <Component id="camLugarBut" min="-2" pref="194" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
-                                      <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="camSexoBut" max="32767" attributes="0"/>
-                                          <Component id="camEdadBut" max="32767" attributes="0"/>
-                                          <Component id="camLugarBut" min="-2" pref="194" max="-2" attributes="0"/>
+                                      <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
+                                          <Component id="camFechaNacBut" min="-2" pref="188" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
-                                  <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="-2" pref="154" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="camDescBut" min="-2" pref="255" max="-2" attributes="0"/>
-                                  <Component id="camGenBut" alignment="0" min="-2" pref="255" max="-2" attributes="0"/>
-                                  <Component id="camApellidosBut" alignment="0" min="-2" pref="255" max="-2" attributes="0"/>
-                                  <Component id="camNombreBut" min="-2" pref="255" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="148" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="camDescBut" min="-2" pref="255" max="-2" attributes="0"/>
+                                      <Component id="camGenBut" alignment="0" min="-2" pref="255" max="-2" attributes="0"/>
+                                      <Component id="camApellidosBut" alignment="0" min="-2" pref="255" max="-2" attributes="0"/>
+                                      <Component id="camNombreBut" min="-2" pref="255" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
                           </Group>
                       </Group>
@@ -105,7 +109,9 @@
               <Component id="camEdadBut" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="camSexoBut" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="123" max="32767" attributes="0"/>
+              <EmptySpace pref="52" max="32767" attributes="0"/>
+              <Component id="atrasBut" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -141,11 +147,17 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Cambiar residencia"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="camResiButActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="camFechaNacBut">
       <Properties>
         <Property name="text" type="java.lang.String" value="Cambiar fecha nacimiento"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="camFechaNacButActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="camNombreBut">
       <Properties>
@@ -204,6 +216,14 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Sexo"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="atrasBut">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Atr&#xe1;s"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="atrasButActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
