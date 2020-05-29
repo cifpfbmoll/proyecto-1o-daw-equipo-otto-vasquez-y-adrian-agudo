@@ -10,7 +10,8 @@ package ventanas;
  * @author ADRI
  */
 public class chat extends javax.swing.JFrame {
-
+    private usuario usu1;
+    private usuario usu2;
     /**
      * Creates new form chat
      */

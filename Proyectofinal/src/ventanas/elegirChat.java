@@ -5,9 +5,12 @@
  */
 package ventanas;
 
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import proyectofinal.conectarBBDD;
 
 /**
@@ -17,6 +20,7 @@ import proyectofinal.conectarBBDD;
 public class elegirChat extends javax.swing.JFrame {
     private usuario usu;
     conectarBBDD con = new conectarBBDD();
+    private ArrayList<String> nicks=new ArrayList<String>();
     /**
      * Creates new form elegirChat
      */
@@ -40,12 +44,18 @@ public class elegirChat extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTextField1 = new javax.swing.JTextField();
+        introChatField = new javax.swing.JTextField();
         irBut = new javax.swing.JToggleButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         printChatsField = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        introChatField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                introChatFieldActionPerformed(evt);
+            }
+        });
 
         irBut.setText("Ir");
         irBut.addActionListener(new java.awt.event.ActionListener() {
@@ -69,7 +79,7 @@ public class elegirChat extends javax.swing.JFrame {
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 615, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(34, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jTextField1)
+                        .addComponent(introChatField)
                         .addGap(18, 18, 18)
                         .addComponent(irBut, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(28, 28, 28))))
@@ -81,7 +91,7 @@ public class elegirChat extends javax.swing.JFrame {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 451, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(introChatField, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(irBut, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(64, 64, 64))
         );
@@ -90,8 +100,22 @@ public class elegirChat extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void irButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_irButActionPerformed
-        
+        int i=0;
+        boolean found=false;
+        while(i<nicks.size()||!found){
+            if (introChatField.getText().equals(nicks.get(i))) {
+                found=true;
+            } else {
+               if(i==(nicks.size()-1)){
+                  JOptionPane.showMessageDialog(null, "No se encuentra el usuario");
+               }
+            }
+        }
     }//GEN-LAST:event_irButActionPerformed
+
+    private void introChatFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_introChatFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_introChatFieldActionPerformed
 
     /**
      * @param args the command line arguments
@@ -137,6 +161,7 @@ public class elegirChat extends javax.swing.JFrame {
             while (rs.next()) { 
                 System.out.println(rs.getString("nick"));
                 printChatsField.setText(printChatsField.getText() + "\n" + rs.getString("nick"));
+                nicks.add(rs.getString("nick"));
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -144,9 +169,9 @@ public class elegirChat extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField introChatField;
     private javax.swing.JToggleButton irBut;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextArea printChatsField;
     // End of variables declaration//GEN-END:variables
 }
