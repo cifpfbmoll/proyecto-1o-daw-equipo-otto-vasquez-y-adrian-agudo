@@ -27,6 +27,7 @@ public class elegirChat extends javax.swing.JFrame {
     public elegirChat(usuario usu){
         this.usu=usu;
         initComponents();
+        printarChats();
     }
 
     
@@ -46,8 +47,6 @@ public class elegirChat extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTextField1.setText("jTextField1");
-
         irBut.setText("Ir");
         irBut.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -64,43 +63,34 @@ public class elegirChat extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(28, 28, 28)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(36, 36, 36)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 503, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(irBut, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 615, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(34, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(44, 44, 44)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 586, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(34, Short.MAX_VALUE))
+                        .addComponent(jTextField1)
+                        .addGap(18, 18, 18)
+                        .addComponent(irBut, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(28, 28, 28))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(19, 19, 19)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 384, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 451, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextField1)
-                    .addComponent(irBut, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE))
-                .addContainerGap(131, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(irBut, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(64, 64, 64))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void irButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_irButActionPerformed
-        try {
-            Statement st = con.getConnection().createStatement();
-            ResultSet rs = st.executeQuery("select nick from usuarios where id in(select distinct id_usuario0 from (select * from mensajes where id_usuario0=" + usu.getId() + " or id_usuario1=" + usu.getId() + ") as t1 where id_usuario0!=" + usu.getId() + " union select distinct id_usuario1 from (select * from mensajes where id_usuario0=" + usu.getId() + " or id_usuario1=" + usu.getId() + ") as t2 where id_usuario1!=" + usu.getId() + ")");
-            while (rs.next()) {
-                rs.next();
-                printChatsField.setText(printChatsField.getText() + "\n" + rs.getString("nick"));
-            }
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
+        
     }//GEN-LAST:event_irButActionPerformed
 
     /**
@@ -137,7 +127,21 @@ public class elegirChat extends javax.swing.JFrame {
             }
         });
     }
-
+    
+    
+    
+    public void printarChats(){
+        try {
+            Statement st = con.getConnection().createStatement();
+            ResultSet rs = st.executeQuery("select nick from usuarios where id in(select distinct id_usuario0 from (select * from mensajes where id_usuario0=" + usu.getId() + " or id_usuario1=" + usu.getId() + ") as t1 where id_usuario0!=" + usu.getId() + " union select distinct id_usuario1 from (select * from mensajes where id_usuario0=" + usu.getId() + " or id_usuario1=" + usu.getId() + ") as t2 where id_usuario1!=" + usu.getId() + ")");
+            while (rs.next()) { 
+                System.out.println(rs.getString("nick"));
+                printChatsField.setText(printChatsField.getText() + "\n" + rs.getString("nick"));
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton irBut;
