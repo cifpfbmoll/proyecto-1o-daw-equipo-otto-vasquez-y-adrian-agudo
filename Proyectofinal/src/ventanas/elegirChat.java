@@ -94,11 +94,8 @@ public class elegirChat extends javax.swing.JFrame {
         try {
             Statement st = con.getConnection().createStatement();
             ResultSet rs = st.executeQuery("select nick from usuarios where id in(select distinct id_usuario0 from (select * from mensajes where id_usuario0=" + usu.getId() + " or id_usuario1=" + usu.getId() + ") as t1 where id_usuario0!=" + usu.getId() + " union select distinct id_usuario1 from (select * from mensajes where id_usuario0=" + usu.getId() + " or id_usuario1=" + usu.getId() + ") as t2 where id_usuario1!=" + usu.getId() + ")");
-            rs.next();
-            System.out.println(rs.getString("nick"));
             while (rs.next()) {
                 rs.next();
-                System.out.println(rs.getString("nick"));
                 printChatsField.setText(printChatsField.getText() + "\n" + rs.getString("nick"));
             }
         } catch (SQLException ex) {
