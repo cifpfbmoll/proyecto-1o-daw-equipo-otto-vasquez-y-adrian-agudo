@@ -11,7 +11,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import proyectofinal.conectarBBDD;
 import java.sql.*;
-
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import javax.swing.JOptionPane;
+import com.mysql.jdbc.MysqlDataTruncation;
 /**
  *
  * @author ADRI
@@ -297,25 +300,64 @@ public class registro extends javax.swing.JFrame {
     private void aceptarButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aceptarButActionPerformed
         int maxIdVar; 
         try {
+            Pattern patron = Pattern.compile("[0-9]{4}/[0-9]{2}/[0-9]{2}");
+            Matcher mat= patron.matcher(dateField.getText());
             Statement st=con.getConnection().createStatement();
             ResultSet maxId=st.executeQuery("select coalesce(max(id), -1) as maxId from usuarios");
             maxId.next();
             PreparedStatement insNuevoUsuario = con.getConnection().prepareStatement("INSERT INTO usuarios VALUES (?,?,?,?,?,?,?,?,?,?)");
-            insNuevoUsuario.setInt(1, (maxId.getInt("maxId")+1));   
-            insNuevoUsuario.setString(2, usuarioField.getText());
-            insNuevoUsuario.setString(3, contraseñaField.getText());
-            insNuevoUsuario.setString(4, nombreField.getText());
-            insNuevoUsuario.setString(5, surnameField.getText());
-            insNuevoUsuario.setString(6, genero);
-            insNuevoUsuario.setString(7, orsex);
-            insNuevoUsuario.setString(8, provinciaField.getText());
-            insNuevoUsuario.setString(9, dateField.getText());
-            insNuevoUsuario.setString(10, "");
-            insNuevoUsuario.executeUpdate();
-            limpiar();
+            if (!(usuarioField.getText().equals("")||contraseñaField.getText().equals("")||nombreField.getText().equals("")||surnameField.getText().equals("")||genero.equals("")||orsex.equals("")||provinciaField.getText().equals("")||dateField.getText().equals(""))){
+                insNuevoUsuario.setInt(1, (maxId.getInt("maxId")+1));   
+                if (usuarioField.getText().length()<=10){
+                    Statement st2=con.getConnection().createStatement();
+                    ResultSet usuarios=st2.executeQuery("select * from usuarios where nick ='"+usuarioField.getText()+"'");
+                    if (!usuarios.next()){
+                        insNuevoUsuario.setString(2, usuarioField.getText());
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Ya existe el usuario");
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(null, "Nombre de usuario demasiado extenso");
+                }
+                if (contraseñaField.getText().length()<=20){
+                    insNuevoUsuario.setString(3, contraseñaField.getText());
+                }else{
+                    JOptionPane.showMessageDialog(null, "Contraseña demasiado extensa");
+                }
+                if(nombreField.getText().length()<=20){
+                    insNuevoUsuario.setString(4, nombreField.getText());
+                }else{
+                    JOptionPane.showMessageDialog(null, "Nombre demasiado extenso");
+                }
+                if(surnameField.getText().length()<=20){
+                    insNuevoUsuario.setString(5, surnameField.getText());
+                }else{
+                    JOptionPane.showMessageDialog(null, "Apellido demasiado extenso");
+                }
+                insNuevoUsuario.setString(6, genero);
+                insNuevoUsuario.setString(7, orsex);
+                if(provinciaField.getText().length()<=35){
+                    insNuevoUsuario.setString(8, provinciaField.getText());
+                }else{
+                    JOptionPane.showMessageDialog(null, "Nombre de província demasiado extenso");
+                }
+                if (mat.matches()){
+                    insNuevoUsuario.setString(9, dateField.getText());
+                }else{
+                    JOptionPane.showMessageDialog(null, "La fecha no se adecua al formato (YYYY-MM-DD)");
+                }    
+                insNuevoUsuario.setString(10, "");
+                insNuevoUsuario.executeUpdate();
+                JOptionPane.showMessageDialog(null, "El registro se ha realizado correctamente");
+                limpiar();
+            }else{
+                JOptionPane.showMessageDialog(null, "Completar todos los campos");
+            }
+        }catch (MysqlDataTruncation ex2 ){
+            JOptionPane.showMessageDialog(null, "Fecha errónea");
         } catch (SQLException ex) {
             Logger.getLogger(registro.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } 
     }//GEN-LAST:event_aceptarButActionPerformed
 
     private void contraseñaFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contraseñaFieldActionPerformed

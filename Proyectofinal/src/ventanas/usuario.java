@@ -10,6 +10,7 @@ package ventanas;
  * @author ADRI
  */
 public class usuario {
+    private int id;
     private String nick;
     private String contraseña;
     private String nombre;
@@ -35,6 +36,10 @@ public class usuario {
     public usuario() {
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+    
     public void setNick(String nick) {
         this.nick = nick;
     }
@@ -71,6 +76,10 @@ public class usuario {
         this.descripcion = descripcion;
     }
 
+    public int getId() {
+        return id;
+    }
+    
     public String getNick() {
         return nick;
     }
