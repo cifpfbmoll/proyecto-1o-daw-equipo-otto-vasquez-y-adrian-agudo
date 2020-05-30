@@ -17,8 +17,12 @@ import javax.swing.JOptionPane;
 import com.mysql.jdbc.MysqlDataTruncation;
 import java.awt.Image;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 /**
  *
  * @author ADRI
@@ -320,67 +324,75 @@ public class registro extends javax.swing.JFrame {
     }//GEN-LAST:event_atrasButActionPerformed
 
     private void aceptarButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aceptarButActionPerformed
-        int maxIdVar; 
+        int maxIdVar;
         String usuarioVar;
         try {
+            FileInputStream archivofoto;//para subir foto
             Pattern patron = Pattern.compile("[0-9]{4}/[0-9]{2}/[0-9]{2}");
-            Matcher mat= patron.matcher(dateField.getText());
-            Statement st=con.getConnection().createStatement();
-            ResultSet maxId=st.executeQuery("select coalesce(max(id), -1) as maxId from usuarios");
+            Matcher mat = patron.matcher(dateField.getText());
+            Statement st = con.getConnection().createStatement();
+            ResultSet maxId = st.executeQuery("select coalesce(max(id), -1) as maxId from usuarios");
             maxId.next();
-            PreparedStatement insNuevoUsuario = con.getConnection().prepareStatement("INSERT INTO usuarios VALUES (?,?,?,?,?,?,?,?,?,?)");
-            if (!(usuarioField.getText().equals("")||contraseñaField.getText().equals("")||nombreField.getText().equals("")||surnameField.getText().equals("")||genero.equals("")||orsex.equals("")||provinciaField.getText().equals("")||dateField.getText().equals(""))){
-                insNuevoUsuario.setInt(1, (maxId.getInt("maxId")+1));   
-                if (usuarioField.getText().length()<=10){
-                    Statement st2=con.getConnection().createStatement();
-                    ResultSet usuarios=st2.executeQuery("select * from usuarios where nick ='"+usuarioField.getText()+"'");
-                    if (!usuarios.next()){
+            PreparedStatement insNuevoUsuario = con.getConnection().prepareStatement("INSERT INTO usuarios VALUES (?,?,?,?,?,?,?,?,?,?,?)");
+            if (!(usuarioField.getText().equals("") || contraseñaField.getText().equals("") || nombreField.getText().equals("") || surnameField.getText().equals("") || genero.equals("") || orsex.equals("") || provinciaField.getText().equals("") || dateField.getText().equals(""))) {
+                insNuevoUsuario.setInt(1, (maxId.getInt("maxId") + 1));
+                if (usuarioField.getText().length() <= 10) {
+                    Statement st2 = con.getConnection().createStatement();
+                    ResultSet usuarios = st2.executeQuery("select * from usuarios where nick ='" + usuarioField.getText() + "'");
+                    if (!usuarios.next()) {
                         insNuevoUsuario.setString(2, usuarioField.getText());
-                    }else{
+                    } else {
                         JOptionPane.showMessageDialog(null, "Ya existe el usuario");
                     }
-                }else{
+                } else {
                     JOptionPane.showMessageDialog(null, "Nombre de usuario demasiado extenso");
                 }
-                if (contraseñaField.getText().length()<=20){
+                if (contraseñaField.getText().length() <= 20) {
                     insNuevoUsuario.setString(3, contraseñaField.getText());
-                }else{
+                } else {
                     JOptionPane.showMessageDialog(null, "Contraseña demasiado extensa");
                 }
-                if(nombreField.getText().length()<=20){
+                if (nombreField.getText().length() <= 20) {
                     insNuevoUsuario.setString(4, nombreField.getText());
-                }else{
+                } else {
                     JOptionPane.showMessageDialog(null, "Nombre demasiado extenso");
                 }
-                if(surnameField.getText().length()<=20){
+                if (surnameField.getText().length() <= 20) {
                     insNuevoUsuario.setString(5, surnameField.getText());
-                }else{
+                } else {
                     JOptionPane.showMessageDialog(null, "Apellido demasiado extenso");
                 }
                 insNuevoUsuario.setString(6, genero);
                 insNuevoUsuario.setString(7, orsex);
-                if(provinciaField.getText().length()<=35){
+                if (provinciaField.getText().length() <= 35) {
                     insNuevoUsuario.setString(8, provinciaField.getText());
-                }else{
+                } else {
                     JOptionPane.showMessageDialog(null, "Nombre de província demasiado extenso");
                 }
-                if (mat.matches()){
+                if (mat.matches()) {
                     insNuevoUsuario.setString(9, dateField.getText());
-                }else{
+                } else {
                     JOptionPane.showMessageDialog(null, "La fecha no se adecua al formato (YYYY-MM-DD)");
-                }    
+                }
                 insNuevoUsuario.setString(10, "");
+                //subida imagen
+                archivofoto = new FileInputStream(rutaimg.getText());
+                insNuevoUsuario.setBinaryStream(11, archivofoto);
+                //subida
                 insNuevoUsuario.executeUpdate();
                 JOptionPane.showMessageDialog(null, "El registro se ha realizado correctamente");
                 limpiar();
-            }else{
+                atrasButActionPerformed(evt);
+            } else {
                 JOptionPane.showMessageDialog(null, "Completar todos los campos");
             }
-        }catch (MysqlDataTruncation ex2 ){
-            JOptionPane.showMessageDialog(null, "Fecha errónea");
+        } catch (MysqlDataTruncation ex2) {
+            JOptionPane.showMessageDialog(null, "Error en la subida");
         } catch (SQLException ex) {
             Logger.getLogger(registro.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+        } catch (FileNotFoundException ex) {
+            JOptionPane.showMessageDialog(null, "Es obligatorio introducir imagen de perfil");
+        }
     }//GEN-LAST:event_aceptarButActionPerformed
 
     private void contraseñaFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contraseñaFieldActionPerformed
@@ -393,15 +405,28 @@ public class registro extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        FileNameExtensionfilter filtro = new FileNameExtensionfilter("Formatos de archivo")
+        FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivos JPG y PNG", "jpg", "jpeg", "png");
         JFileChooser archivo = new JFileChooser();
+        archivo.setFileFilter(filtro);
+        archivo.addChoosableFileFilter(filtro);
+        archivo.setDialogTitle("Seleccione archivo");
         int ventana = archivo.showOpenDialog(null);
-        if (ventana == JFileChooser.APPROVE_OPTION){
-            File file=archivo.getSelectedFile();
-            rutaimg.setText(String.valueOf(file));
-            Image foto= getToolkit().getImage(rutaimg.getText());
-            foto = foto.getScaledInstance(200, 200, Image.SCALE_DEFAULT);
-            imgview.setIcon(new ImageIcon(foto));
+
+        if (ventana == JFileChooser.APPROVE_OPTION) {
+            File file = archivo.getSelectedFile();
+            float longitudbytes = (float) archivo.getSelectedFile().length();
+           
+            //limitar tamaño imagen
+            if (longitudbytes>2000000) {
+                JOptionPane.showMessageDialog(null, "La imagen debe pesar menos de 2MB, actualmente pesa: "+(longitudbytes/1000000));
+            } else {
+                rutaimg.setText(String.valueOf(file));
+                Image foto = getToolkit().getImage(rutaimg.getText());
+                foto = foto.getScaledInstance(200, 200, Image.SCALE_DEFAULT);
+                imgview.setIcon(new ImageIcon(foto));
+            }
+            
+
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -439,8 +464,8 @@ public class registro extends javax.swing.JFrame {
             }
         });
     }
-    
-    public void limpiar(){
+
+    public void limpiar() {
         heteCheck.setSelected(false);
         biCheck.setSelected(false);
         homoCheck.setSelected(false);
@@ -452,6 +477,7 @@ public class registro extends javax.swing.JFrame {
         surnameField.setText("");
         dateField.setText("");
         provinciaField.setText("");
+        rutaimg.setText("");
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
