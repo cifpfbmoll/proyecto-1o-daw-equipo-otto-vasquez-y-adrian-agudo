@@ -129,6 +129,7 @@ public class login extends javax.swing.JFrame {
                         usu.setProvincia(ExisteUsu.getString("provincia"));
                         usu.setFechaNac(ExisteUsu.getString("fechaNac"));
                         usu.setDescripcion(ExisteUsu.getString("descripcion"));
+                        usu.setImagen(ExisteUsu.getString("imgperfil"));
                         menuPrincipal menu=new menuPrincipal(usu);
                         menu.setVisible(true);
                         menu.setLabel();

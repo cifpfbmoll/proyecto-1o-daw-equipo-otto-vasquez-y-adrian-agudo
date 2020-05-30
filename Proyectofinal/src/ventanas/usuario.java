@@ -10,6 +10,7 @@ package ventanas;
  * @author ADRI
  */
 public class usuario {
+
     private int id;
     private String nick;
     private String contraseña;
@@ -20,8 +21,9 @@ public class usuario {
     private String provincia;
     private String fechaNac;
     private String descripcion;
+    private String imagen;
 
-    public usuario(String nick, String contraseña, String nombre, String apellidos, String genero, String orSex, String provincia, String fechaNac, String descripcion) {
+    public usuario(String nick, String contraseña, String nombre, String apellidos, String genero, String orSex, String provincia, String fechaNac, String descripcion, String imagen) {
         this.nick = nick;
         this.contraseña = contraseña;
         this.nombre = nombre;
@@ -31,15 +33,28 @@ public class usuario {
         this.provincia = provincia;
         this.fechaNac = fechaNac;
         this.descripcion = descripcion;
+        this.imagen = imagen;
     }
 
     public usuario() {
     }
 
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
+
+    public usuario(String imagen) {
+        this.imagen = imagen;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
-    
+
     public void setNick(String nick) {
         this.nick = nick;
     }
@@ -79,7 +94,7 @@ public class usuario {
     public int getId() {
         return id;
     }
-    
+
     public String getNick() {
         return nick;
     }
@@ -115,5 +130,5 @@ public class usuario {
     public String getDescripcion() {
         return descripcion;
     }
-    
+
 }

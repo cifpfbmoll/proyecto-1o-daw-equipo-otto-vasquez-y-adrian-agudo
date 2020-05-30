@@ -5,22 +5,60 @@
  */
 package ventanas;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+import proyectofinal.conectarBBDD;
+
 /**
  *
  * @author ADRI
  */
 public class menuPrincipal extends javax.swing.JFrame {
+
     private usuario usu;
+
     /**
      * Creates new form menuPrincipal
      */
-    public menuPrincipal() {
+    public menuPrincipal() throws SQLException {
         initComponents();
+        
     }
-    
-    public menuPrincipal(usuario usu){
-        this.usu=usu;
+    conectarBBDD con = new conectarBBDD();
+    Connection cn = con.getConnection();
+
+    public void datosTabla(usuario usu1) throws SQLException {
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("Nombre");
+        modelo.addColumn("Edad");
+        modelo.addColumn("Foto");
+        tabladatos.setModel(modelo);
+        
+        String datos[] = new String [3];
+        try {
+            Statement st = cn.createStatement();
+            ResultSet rs = st.executeQuery("SELECT nick, DATEDIFF(CURRENT_DATE, STR_TO_DATE(t.fechaNac, '%Y-%m-%d'))/365 AS edad, imgperfil FROM usuarios t;");
+            while (rs.next()) {
+                datos[0]=rs.getString(1);
+                datos[1]=rs.getString(2);
+                datos[2]=rs.getString(3);
+                
+                modelo.addRow(datos);
+            }
+            tabladatos.setModel(modelo);
+        } catch (SQLException sQLException) {
+        }
+    }
+
+    public menuPrincipal(usuario usu) throws SQLException {
+        this.usu = usu;
         initComponents();
+        datosTabla(usu);
     }
 
     public void setUsu(usuario usu) {
@@ -30,10 +68,11 @@ public class menuPrincipal extends javax.swing.JFrame {
     public usuario getUsu() {
         return usu;
     }
-    
-    public void setLabel(){
+
+    public void setLabel() {
         nomUsuSalida.setText(this.usu.getNick());
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -46,6 +85,9 @@ public class menuPrincipal extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         nomUsuSalida = new javax.swing.JLabel();
         opcButon = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tabladatos = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -58,21 +100,39 @@ public class menuPrincipal extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setText("jButton1");
+
+        tabladatos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(tabladatos);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(158, 158, 158)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(158, 158, 158)
                         .addComponent(jLabel1)
                         .addGap(394, 394, 394)
                         .addComponent(nomUsuSalida))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(287, 287, 287)
-                        .addComponent(opcButon)))
-                .addContainerGap(218, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jButton1)
+                            .addComponent(opcButon))
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(119, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -81,16 +141,24 @@ public class menuPrincipal extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addComponent(nomUsuSalida))
-                .addGap(50, 50, 50)
+                .addGap(40, 40, 40)
                 .addComponent(opcButon)
-                .addContainerGap(511, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(61, 61, 61)
+                        .addComponent(jButton1)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(97, 97, 97))))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void opcButonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcButonActionPerformed
-        opciones opc=new opciones(usu);
+        opciones opc = new opciones(usu);
         opc.setVisible(true);
         opc.pack();
         this.dispose();
@@ -126,14 +194,21 @@ public class menuPrincipal extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new menuPrincipal().setVisible(true);
+                try {
+                    new menuPrincipal().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(menuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel nomUsuSalida;
     private javax.swing.JButton opcButon;
+    private javax.swing.JTable tabladatos;
     // End of variables declaration//GEN-END:variables
 }
