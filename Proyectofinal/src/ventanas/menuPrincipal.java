@@ -21,6 +21,7 @@ public class menuPrincipal extends javax.swing.JFrame {
     public menuPrincipal(usuario usu){
         this.usu=usu;
         initComponents();
+        setLabel();
     }
 
     public void setUsu(usuario usu) {

@@ -10,6 +10,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import proyectofinal.conectarBBDD;
 
@@ -19,6 +21,7 @@ import proyectofinal.conectarBBDD;
  */
 public class elegirChat extends javax.swing.JFrame {
     private usuario usu;
+    private usuario usu2=new usuario();
     conectarBBDD con = new conectarBBDD();
     private ArrayList<String> nicks=new ArrayList<String>();
     /**
@@ -100,17 +103,30 @@ public class elegirChat extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void irButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_irButActionPerformed
-        int i=0;
-        boolean found=false;
-        while(i<nicks.size()||!found){
-            if (introChatField.getText().equals(nicks.get(i))) {
-                found=true;
-            } else {
-               if(i==(nicks.size()-1)){
-                  JOptionPane.showMessageDialog(null, "No se encuentra el usuario");
-               }
+        try {
+            int i=0;
+            boolean found=false;
+            while(i<nicks.size()&&!found){
+                System.out.println(nicks.size()+" i:"+i+" nick:"+nicks.get(i));
+                if (nicks.get(i).contentEquals(introChatField.getText())) {
+                    found=true;
+                    Statement st = con.getConnection().createStatement();               
+                    ResultSet ExisteUsu = st.executeQuery("select * from usuarios where nick = '"+nicks.get(i)+"'");
+                    ExisteUsu.next();
+                    usu2.crearUsuario(ExisteUsu.getInt("id"),ExisteUsu.getString("nick"),ExisteUsu.getString("contraseña"),ExisteUsu.getString("nombre"),ExisteUsu.getString("apellidos"),ExisteUsu.getString("genero"),ExisteUsu.getString("orSex"),ExisteUsu.getString("provincia"),ExisteUsu.getString("fechaNac"),ExisteUsu.getString("descripcion"));
+                    chat chat=new chat(usu,usu2);
+                    chat.setVisible(true);
+                    this.dispose();
+                } else {
+                   if(i==(nicks.size()-1)){
+                      JOptionPane.showMessageDialog(null, "No se encuentra el usuario");
+                   }
+                }
+                i++;
             }
-        }
+        } catch (SQLException ex) {
+                    Logger.getLogger(elegirChat.class.getName()).log(Level.SEVERE, null, ex);
+                }
     }//GEN-LAST:event_irButActionPerformed
 
     private void introChatFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_introChatFieldActionPerformed
@@ -167,7 +183,7 @@ public class elegirChat extends javax.swing.JFrame {
             System.out.println(ex.getMessage());
         }
     }
-
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField introChatField;
     private javax.swing.JToggleButton irBut;

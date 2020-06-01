@@ -5,6 +5,14 @@
  */
 package ventanas;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import proyectofinal.conectarBBDD;
+
 /**
  *
  * @author ADRI
@@ -12,11 +20,19 @@ package ventanas;
 public class chat extends javax.swing.JFrame {
     private usuario usu1;
     private usuario usu2;
+    conectarBBDD con=new conectarBBDD();
     /**
      * Creates new form chat
      */
     public chat() {
         initComponents();
+    }
+    
+    public chat(usuario usu1,usuario usu2){
+        this.usu1=usu1;
+        this.usu2=usu2;
+        initComponents();
+        enseñarMsgs();
     }
 
     /**
@@ -40,6 +56,11 @@ public class chat extends javax.swing.JFrame {
         jScrollPane1.setViewportView(chatField);
 
         enviarBut.setText("Enviar");
+        enviarBut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                enviarButActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -69,6 +90,28 @@ public class chat extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void enviarButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enviarButActionPerformed
+        if(!mensajeField.getText().equals("")){
+            try {
+                Statement st=con.getConnection().createStatement();
+                ResultSet maxId=st.executeQuery("select coalesce(max(id), -1) as maxId from mensajes");
+                maxId.next();
+                PreparedStatement insert = con.getConnection().prepareStatement("insert into mensajes (id,mensaje,id_usuario0,id_usuario1,url) values (?,?,?,?,?)");
+                insert.setInt(1, maxId.getInt("maxId")+1);
+                insert.setString(2, mensajeField.getText());
+                insert.setInt(3, usu1.getId());
+                insert.setInt(4, usu2.getId());
+                insert.setString(5, null);
+                insert.executeUpdate();
+                insert.close();
+                enseñarMsgs();
+                mensajeField.setText("");
+            } catch (SQLException ex) {
+                Logger.getLogger(chat.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_enviarButActionPerformed
 
     /**
      * @param args the command line arguments
@@ -111,4 +154,23 @@ public class chat extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField mensajeField;
     // End of variables declaration//GEN-END:variables
+
+    private void enseñarMsgs() {
+        try {
+            chatField.setText("");
+            Statement st = con.getConnection().createStatement();
+            ResultSet rs = st.executeQuery("select * from mensajes where (id_usuario0="+usu1.getId()+" or id_usuario1="+usu1.getId()+") and (id_usuario0="+usu2.getId()+" or id_usuario1="+usu2.getId()+")");
+            while (rs.next()) {
+                if(!rs.getString("mensaje").equals("")){
+                    if(rs.getInt("id_usuario0")==usu1.getId()){
+                        chatField.setText(chatField.getText() + "\n" + "Tu: " +rs.getString("mensaje"));
+                    }else{
+                        chatField.setText(chatField.getText() + "\n" + usu2.getNick() + ": " + rs.getString("mensaje"));
+                    }
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(chat.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }
