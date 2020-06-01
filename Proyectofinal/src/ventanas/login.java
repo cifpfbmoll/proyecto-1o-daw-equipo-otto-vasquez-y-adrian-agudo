@@ -97,8 +97,7 @@ public class login extends javax.swing.JFrame {
       
     private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
         registro rg=new registro();
-        rg.setVisible(true);
-        rg.pack();        
+        rg.setVisible(true);        
         this.dispose();        
     }//GEN-LAST:event_registerButtonActionPerformed
 
@@ -120,19 +119,9 @@ public class login extends javax.swing.JFrame {
                 if (ExisteUsu.next()){
                     if(ExisteUsu.getString("contraseña").equals(password)){
                         usuario usu=new usuario();
-                        usu.setId(ExisteUsu.getInt("id"));
-                        usu.setNick(ExisteUsu.getString("nick"));
-                        usu.setContraseña(ExisteUsu.getString("contraseña"));
-                        usu.setNombre(ExisteUsu.getString("nombre"));
-                        usu.setApellidos(ExisteUsu.getString("apellidos"));
-                        usu.setGenero(ExisteUsu.getString("genero"));
-                        usu.setOrSex(ExisteUsu.getString("orSex"));
-                        usu.setProvincia(ExisteUsu.getString("provincia"));
-                        usu.setFechaNac(ExisteUsu.getString("fechaNac"));
-                        usu.setDescripcion(ExisteUsu.getString("descripcion"));
+                        usu.crearUsuario(ExisteUsu.getInt("id"),ExisteUsu.getString("nick"),ExisteUsu.getString("contraseña"),ExisteUsu.getString("nombre"),ExisteUsu.getString("apellidos"),ExisteUsu.getString("genero"),ExisteUsu.getString("orSex"),ExisteUsu.getString("provincia"),ExisteUsu.getString("fechaNac"),ExisteUsu.getString("descripcion"));
                         menuPrincipal menu=new menuPrincipal(usu);
                         menu.setVisible(true);
-                        menu.pack();
                         menu.setLabel();
                         this.dispose();
                     }else{

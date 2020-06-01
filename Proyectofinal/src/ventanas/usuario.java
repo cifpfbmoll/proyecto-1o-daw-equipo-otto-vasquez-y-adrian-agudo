@@ -116,4 +116,17 @@ public class usuario {
         return descripcion;
     }
     
+    public void crearUsuario(int Id, String nick, String contra, String nombre, String apellidos, String genero, String orSex, String provincia, String fechaNac, String desc){
+        setId(Id);
+        setNick(nick);
+        setContraseña(contra);
+        setNombre(nombre);
+        setApellidos(apellidos);
+        setGenero(genero);
+        setOrSex(orSex);
+        setProvincia(provincia);
+        setFechaNac(fechaNac);
+        setDescripcion(desc);
+    }
+    
 }

@@ -21,6 +21,15 @@ public class menuPrincipal extends javax.swing.JFrame {
     public menuPrincipal(usuario usu){
         this.usu=usu;
         initComponents();
+        setLabel();
+    }
+
+    public void setUsu(usuario usu) {
+        this.usu = usu;
+    }
+
+    public usuario getUsu() {
+        return usu;
     }
     
     public void setLabel(){
@@ -37,10 +46,26 @@ public class menuPrincipal extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         nomUsuSalida = new javax.swing.JLabel();
+        opcButon = new javax.swing.JButton();
+        chatBut = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("Bienvenido");
+
+        opcButon.setText("opsiones");
+        opcButon.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                opcButonActionPerformed(evt);
+            }
+        });
+
+        chatBut.setText("chat");
+        chatBut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chatButActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -49,9 +74,15 @@ public class menuPrincipal extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(158, 158, 158)
                 .addComponent(jLabel1)
-                .addGap(394, 394, 394)
+                .addGap(133, 133, 133)
                 .addComponent(nomUsuSalida)
-                .addContainerGap(218, Short.MAX_VALUE))
+                .addContainerGap(409, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(54, 54, 54)
+                .addComponent(opcButon)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(chatBut)
+                .addGap(109, 109, 109))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -60,11 +91,29 @@ public class menuPrincipal extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addComponent(nomUsuSalida))
-                .addContainerGap(593, Short.MAX_VALUE))
+                .addGap(83, 83, 83)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(opcButon)
+                    .addComponent(chatBut))
+                .addContainerGap(478, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void opcButonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcButonActionPerformed
+        opciones opc=new opciones(usu);
+        opc.setVisible(true);
+        opc.pack();
+        this.dispose();
+    }//GEN-LAST:event_opcButonActionPerformed
+
+    private void chatButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chatButActionPerformed
+        elegirChat chat=new elegirChat(usu);
+        chat.setVisible(true);
+        chat.pack();
+        this.dispose();
+    }//GEN-LAST:event_chatButActionPerformed
 
     /**
      * @param args the command line arguments
@@ -102,7 +151,9 @@ public class menuPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton chatBut;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel nomUsuSalida;
+    private javax.swing.JButton opcButon;
     // End of variables declaration//GEN-END:variables
 }

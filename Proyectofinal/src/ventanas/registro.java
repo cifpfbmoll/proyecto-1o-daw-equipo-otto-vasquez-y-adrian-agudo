@@ -299,6 +299,7 @@ public class registro extends javax.swing.JFrame {
 
     private void aceptarButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aceptarButActionPerformed
         int maxIdVar; 
+        String usuarioVar;
         try {
             Pattern patron = Pattern.compile("[0-9]{4}/[0-9]{2}/[0-9]{2}");
             Matcher mat= patron.matcher(dateField.getText());
