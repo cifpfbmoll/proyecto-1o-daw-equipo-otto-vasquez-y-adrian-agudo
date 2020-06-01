@@ -29,36 +29,11 @@ public class menuPrincipal extends javax.swing.JFrame {
         initComponents();
         
     }
-    conectarBBDD con = new conectarBBDD();
-    Connection cn = con.getConnection();
-
-    public void datosTabla(usuario usu1) throws SQLException {
-        DefaultTableModel modelo = new DefaultTableModel();
-        modelo.addColumn("Nombre");
-        modelo.addColumn("Edad");
-        modelo.addColumn("Foto");
-        tabladatos.setModel(modelo);
-        
-        String datos[] = new String [3];
-        try {
-            Statement st = cn.createStatement();
-            ResultSet rs = st.executeQuery("SELECT nick, DATEDIFF(CURRENT_DATE, STR_TO_DATE(t.fechaNac, '%Y-%m-%d'))/365 AS edad, imgperfil FROM usuarios t;");
-            while (rs.next()) {
-                datos[0]=rs.getString(1);
-                datos[1]=rs.getString(2);
-                datos[2]=rs.getString(3);
-                
-                modelo.addRow(datos);
-            }
-            tabladatos.setModel(modelo);
-        } catch (SQLException sQLException) {
-        }
-    }
+   
 
     public menuPrincipal(usuario usu) throws SQLException {
         this.usu = usu;
         initComponents();
-        datosTabla(usu);
     }
 
     public void setUsu(usuario usu) {
@@ -86,8 +61,6 @@ public class menuPrincipal extends javax.swing.JFrame {
         nomUsuSalida = new javax.swing.JLabel();
         opcButon = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tabladatos = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -102,19 +75,6 @@ public class menuPrincipal extends javax.swing.JFrame {
 
         jButton1.setText("jButton1");
 
-        tabladatos.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane1.setViewportView(tabladatos);
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -126,13 +86,10 @@ public class menuPrincipal extends javax.swing.JFrame {
                         .addComponent(jLabel1)
                         .addGap(394, 394, 394)
                         .addComponent(nomUsuSalida))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton1)
-                            .addComponent(opcButon))
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(119, Short.MAX_VALUE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jButton1)
+                        .addComponent(opcButon)))
+                .addContainerGap(218, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -143,15 +100,9 @@ public class menuPrincipal extends javax.swing.JFrame {
                     .addComponent(nomUsuSalida))
                 .addGap(40, 40, 40)
                 .addComponent(opcButon)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(61, 61, 61)
-                        .addComponent(jButton1)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(97, 97, 97))))
+                .addGap(61, 61, 61)
+                .addComponent(jButton1)
+                .addContainerGap(446, Short.MAX_VALUE))
         );
 
         pack();
@@ -206,9 +157,7 @@ public class menuPrincipal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel nomUsuSalida;
     private javax.swing.JButton opcButon;
-    private javax.swing.JTable tabladatos;
     // End of variables declaration//GEN-END:variables
 }
