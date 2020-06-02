@@ -44,7 +44,7 @@ public class Lista extends javax.swing.JFrame {
         initComponents();
     }
 
-    public Lista(usuario usu) throws SQLException, IOException{
+    public Lista(usuario usu) throws SQLException, IOException {
         this.usu = usu;
         initComponents();
         datosTabla(usu);
@@ -61,12 +61,13 @@ public class Lista extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        foto = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabladatos = new javax.swing.JTable();
-        foto = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        getContentPane().add(foto, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 360, 200, 200));
 
         tabladatos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -81,8 +82,7 @@ public class Lista extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tabladatos);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 220, 263, 214));
-        getContentPane().add(foto, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 40, 200, 200));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, 620, 340));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -101,7 +101,7 @@ public class Lista extends javax.swing.JFrame {
         Image imagen = getImage(img, false);
         imagen = imagen.getScaledInstance(200, 200, Image.SCALE_DEFAULT);
         foto.setIcon(new ImageIcon(imagen));
-        
+
     }
 
     private Image getImage(byte[] bytes, boolean isThumbnail) throws IOException {
@@ -122,29 +122,62 @@ public class Lista extends javax.swing.JFrame {
 
     }
 
-    public void datosTabla(usuario usu1) throws SQLException {
+    public void datosTabla(usuario usu) throws SQLException {
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("Nombre");
         modelo.addColumn("Edad");
-        modelo.addColumn("Foto");
+        modelo.addColumn("Descripcion");
         tabladatos.setModel(modelo);
 
         String datos[] = new String[3];
 
-        try {
-            Statement st = cn.createStatement();
-            ResultSet rs = st.executeQuery("SELECT nick, TIMESTAMPDIFF(YEAR,fechaNac,CURDATE()) AS edad, imgperfil FROM usuarios t;");
+        if (usu.getOrSex() == "homosexual") {
+            try {
+                Statement st = cn.createStatement();
+                ResultSet rs = st.executeQuery("SELECT nick, TIMESTAMPDIFF(YEAR,fechaNac,CURDATE()) AS edad, descripcion FROM usuarios t where orSex = 'homosexual' ;");
 
-            while (rs.next()) {
-                datos[0] = rs.getString(1);
-                datos[1] = rs.getString(2);
-                byte[] img = rs.getBytes("imgperfil");
+                while (rs.next()) {
+                    datos[0] = rs.getString(1);
+                    datos[1] = rs.getString(2);
+                    datos[2] = rs.getString(3);
 
-                modelo.addRow(datos);
+                    modelo.addRow(datos);
+                }
+                tabladatos.setModel(modelo);
+            } catch (SQLException sQLException) {
             }
-            tabladatos.setModel(modelo);
-        } catch (SQLException sQLException) {
+        } else if (usu.getOrSex()=="heterosexual") {
+            try {
+                Statement st = cn.createStatement();
+                ResultSet rs = st.executeQuery("SELECT nick, TIMESTAMPDIFF(YEAR,fechaNac,CURDATE()) AS edad, descripcion FROM usuarios t where orSex = 'heterosexual' ;");
+
+                while (rs.next()) {
+                    datos[0] = rs.getString(1);
+                    datos[1] = rs.getString(2);
+                    datos[2] = rs.getString(3);
+
+                    modelo.addRow(datos);
+                }
+                tabladatos.setModel(modelo);
+            } catch (SQLException sQLException) {
+            }
+        } else {
+            try {
+                Statement st = cn.createStatement();
+                ResultSet rs = st.executeQuery("SELECT nick, TIMESTAMPDIFF(YEAR,fechaNac,CURDATE()) AS edad, descripcion FROM usuarios t where orSex = 'bisexual' ;");
+
+                while (rs.next()) {
+                    datos[0] = rs.getString(1);
+                    datos[1] = rs.getString(2);
+                    datos[2] = rs.getString(3);
+
+                    modelo.addRow(datos);
+                }
+                tabladatos.setModel(modelo);
+            } catch (SQLException sQLException) {
+            }
         }
+
     }
 
     public static void main(String args[]) {

@@ -60,6 +60,7 @@ public class registro extends javax.swing.JFrame {
         homoCheck = new javax.swing.JCheckBox();
         biCheck = new javax.swing.JCheckBox();
         jLabel7 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
@@ -76,13 +77,15 @@ public class registro extends javax.swing.JFrame {
         contraseñaField = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
         usuarioField = new javax.swing.JTextField();
-        jLabel14 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         rutaimg = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
         imgview = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        descripciontxt = new javax.swing.JTextArea();
+        fondo = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
         jDialog1.getContentPane().setLayout(jDialog1Layout);
@@ -100,82 +103,86 @@ public class registro extends javax.swing.JFrame {
 
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Nombre:");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 220, -1, -1));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 170, -1, 20));
 
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Apellido/s:");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 270, -1, -1));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 170, -1, 20));
 
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Fecha nacimiento:");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 320, -1, -1));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, -1, 20));
 
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Provincia:");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 380, -1, -1));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 220, -1, 20));
 
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Género:");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 500, 50, -1));
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 340, 50, -1));
 
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("Orientación sexual:");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 580, -1, -1));
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 420, -1, -1));
 
         heteCheck.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 heteCheckActionPerformed(evt);
             }
         });
-        getContentPane().add(heteCheck, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 600, -1, -1));
+        getContentPane().add(heteCheck, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 440, -1, -1));
 
         homoCheck.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 homoCheckActionPerformed(evt);
             }
         });
-        getContentPane().add(homoCheck, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 600, -1, -1));
+        getContentPane().add(homoCheck, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 440, -1, -1));
 
         biCheck.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 biCheckActionPerformed(evt);
             }
         });
-        getContentPane().add(biCheck, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 600, -1, -1));
+        getContentPane().add(biCheck, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 440, -1, -1));
 
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Heterosexual");
-        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 580, -1, -1));
+        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 420, -1, -1));
+
+        jLabel14.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel14.setText("(YYYY/MM/DD)");
+        getContentPane().add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 220, -1, 30));
 
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Bisexual");
-        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 580, -1, -1));
+        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 420, -1, -1));
 
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setText("Homosexual");
-        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 580, -1, -1));
+        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 420, -1, -1));
 
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("Masculino");
-        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 500, -1, -1));
+        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 340, -1, -1));
 
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setText("Femenino");
-        getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 500, -1, -1));
+        getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 340, -1, -1));
 
         mascCheck.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mascCheckActionPerformed(evt);
             }
         });
-        getContentPane().add(mascCheck, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 520, -1, -1));
+        getContentPane().add(mascCheck, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 370, -1, -1));
 
         femCheck.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 femCheckActionPerformed(evt);
             }
         });
-        getContentPane().add(femCheck, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 520, -1, -1));
+        getContentPane().add(femCheck, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 370, -1, -1));
 
         aceptarBut.setText("ACEPTAR");
         aceptarBut.addActionListener(new java.awt.event.ActionListener() {
@@ -198,54 +205,50 @@ public class registro extends javax.swing.JFrame {
                 provinciaFieldActionPerformed(evt);
             }
         });
-        getContentPane().add(provinciaField, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 380, 270, -1));
+        getContentPane().add(provinciaField, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 220, 270, -1));
 
         dateField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 dateFieldActionPerformed(evt);
             }
         });
-        getContentPane().add(dateField, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 320, 270, -1));
+        getContentPane().add(dateField, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 220, 270, -1));
 
         surnameField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 surnameFieldActionPerformed(evt);
             }
         });
-        getContentPane().add(surnameField, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 270, 270, -1));
+        getContentPane().add(surnameField, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 170, 270, -1));
 
         nombreField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 nombreFieldActionPerformed(evt);
             }
         });
-        getContentPane().add(nombreField, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 220, 269, -1));
+        getContentPane().add(nombreField, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 170, 269, -1));
 
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
         jLabel12.setText("Contraseña:");
-        getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 170, -1, -1));
+        getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 120, -1, 20));
 
         contraseñaField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 contraseñaFieldActionPerformed(evt);
             }
         });
-        getContentPane().add(contraseñaField, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 170, 270, -1));
+        getContentPane().add(contraseñaField, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 120, 270, -1));
 
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
         jLabel13.setText("Usuario:");
-        getContentPane().add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 120, -1, -1));
+        getContentPane().add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 120, -1, 20));
 
         usuarioField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 usuarioFieldActionPerformed(evt);
             }
         });
-        getContentPane().add(usuarioField, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 120, 270, -1));
-
-        jLabel14.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel14.setText("(YYYY/MM/DD)");
-        getContentPane().add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 320, -1, -1));
+        getContentPane().add(usuarioField, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 120, 270, -1));
 
         jLabel16.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(255, 255, 255));
@@ -254,8 +257,8 @@ public class registro extends javax.swing.JFrame {
 
         jLabel17.setForeground(new java.awt.Color(255, 255, 255));
         jLabel17.setText("Foto de perfil:");
-        getContentPane().add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 440, 80, -1));
-        getContentPane().add(rutaimg, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 440, 270, -1));
+        getContentPane().add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 280, 80, 20));
+        getContentPane().add(rutaimg, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 280, 270, -1));
 
         jButton2.setText("Seleccionar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -263,11 +266,21 @@ public class registro extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 440, -1, -1));
-        getContentPane().add(imgview, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 100, 200, 200));
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 280, -1, -1));
+        getContentPane().add(imgview, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 280, 200, 200));
 
-        jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/loginverde.jpg"))); // NOI18N
-        getContentPane().add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, -210, 820, 1010));
+        jLabel18.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel18.setText("Descripcion \n(opcional):");
+        getContentPane().add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 500, 140, 20));
+
+        descripciontxt.setColumns(20);
+        descripciontxt.setRows(5);
+        jScrollPane1.setViewportView(descripciontxt);
+
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 500, 300, 90));
+
+        fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/loginverde.jpg"))); // NOI18N
+        getContentPane().add(fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, -210, 820, 1010));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -374,11 +387,11 @@ public class registro extends javax.swing.JFrame {
                 } else {
                     JOptionPane.showMessageDialog(null, "La fecha no se adecua al formato (YYYY-MM-DD)");
                 }
-                insNuevoUsuario.setString(10, "");
+                insNuevoUsuario.setString(10, descripciontxt.getText());
                 //subida imagen
                 archivofoto = new FileInputStream(rutaimg.getText());
                 insNuevoUsuario.setBinaryStream(11, archivofoto);
-                //subida
+                //subida datos
                 insNuevoUsuario.executeUpdate();
                 JOptionPane.showMessageDialog(null, "El registro se ha realizado correctamente");
                 limpiar();
@@ -478,6 +491,7 @@ public class registro extends javax.swing.JFrame {
         dateField.setText("");
         provinciaField.setText("");
         rutaimg.setText("");
+        descripciontxt.setText("");
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -486,7 +500,9 @@ public class registro extends javax.swing.JFrame {
     private javax.swing.JCheckBox biCheck;
     private javax.swing.JTextField contraseñaField;
     private javax.swing.JFormattedTextField dateField;
+    private javax.swing.JTextArea descripciontxt;
     private javax.swing.JCheckBox femCheck;
+    private javax.swing.JLabel fondo;
     private javax.swing.JCheckBox heteCheck;
     private javax.swing.JCheckBox homoCheck;
     private javax.swing.JLabel imgview;
@@ -498,9 +514,9 @@ public class registro extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -509,6 +525,7 @@ public class registro extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JCheckBox mascCheck;
     private javax.swing.JTextField nombreField;
     private javax.swing.JTextField provinciaField;
