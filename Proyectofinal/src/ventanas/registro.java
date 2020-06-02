@@ -418,7 +418,7 @@ public class registro extends javax.swing.JFrame {
            
             //limitar tamaño imagen
             if (longitudbytes>2000000) {
-                JOptionPane.showMessageDialog(null, "La imagen debe pesar menos de 2MB, actualmente pesa: "+(longitudbytes/1000000));
+                JOptionPane.showMessageDialog(null, "La imagen debe pesar menos de 2MB, actualmente pesa: "+(longitudbytes/1000000)+" MB");
             } else {
                 rutaimg.setText(String.valueOf(file));
                 Image foto = getToolkit().getImage(rutaimg.getText());

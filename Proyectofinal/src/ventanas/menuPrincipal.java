@@ -5,6 +5,7 @@
  */
 package ventanas;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -73,22 +74,29 @@ public class menuPrincipal extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("jButton1");
+        jButton1.setText("Lista");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(158, 158, 158)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(135, 135, 135)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(394, 394, 394)
                         .addComponent(nomUsuSalida))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jButton1)
-                        .addComponent(opcButon)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jButton1)
+                            .addComponent(opcButon))
+                        .addGap(394, 394, 394)))
                 .addContainerGap(218, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -98,11 +106,11 @@ public class menuPrincipal extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addComponent(nomUsuSalida))
-                .addGap(40, 40, 40)
+                .addGap(51, 51, 51)
                 .addComponent(opcButon)
-                .addGap(61, 61, 61)
+                .addGap(79, 79, 79)
                 .addComponent(jButton1)
-                .addContainerGap(446, Short.MAX_VALUE))
+                .addContainerGap(417, Short.MAX_VALUE))
         );
 
         pack();
@@ -114,6 +122,20 @@ public class menuPrincipal extends javax.swing.JFrame {
         opc.pack();
         this.dispose();
     }//GEN-LAST:event_opcButonActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        try {
+            // TODO add your handling code here:
+            Lista lista = new Lista(usu);
+            lista.setVisible(true);
+            lista.pack();
+            this.dispose();
+        } catch (SQLException ex) {
+            System.out.println("sql");
+        } catch (IOException ex) {
+            System.out.println("ioe");
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments

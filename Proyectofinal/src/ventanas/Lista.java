@@ -5,10 +5,19 @@
  */
 package ventanas;
 
+import java.awt.Image;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Iterator;
+import javax.imageio.ImageIO;
+import javax.imageio.ImageReadParam;
+import javax.imageio.ImageReader;
+import javax.imageio.stream.ImageInputStream;
+import javax.swing.ImageIcon;
 import javax.swing.table.DefaultTableModel;
 import proyectofinal.conectarBBDD;
 
@@ -16,13 +25,31 @@ import proyectofinal.conectarBBDD;
  *
  * @author Usuario
  */
-public class NewJFrame extends javax.swing.JFrame {
+public class Lista extends javax.swing.JFrame {
+
+    private usuario usu;
+
+    public usuario getUsu() {
+        return usu;
+    }
+
+    public void setUsu(usuario usu) {
+        this.usu = usu;
+    }
 
     /**
      * Creates new form NewJFrame
      */
-    public NewJFrame() {
+    public Lista() {
         initComponents();
+    }
+
+    public Lista(usuario usu) throws SQLException, IOException{
+        this.usu = usu;
+        initComponents();
+        datosTabla(usu);
+        llamarImagen(usu);
+
     }
 
     /**
@@ -36,8 +63,10 @@ public class NewJFrame extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         tabladatos = new javax.swing.JTable();
+        foto = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         tabladatos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -52,22 +81,8 @@ public class NewJFrame extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tabladatos);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(145, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(88, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 220, 263, 214));
+        getContentPane().add(foto, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 40, 200, 200));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -78,30 +93,60 @@ public class NewJFrame extends javax.swing.JFrame {
     conectarBBDD con = new conectarBBDD();
     Connection cn = con.getConnection();
 
-    
+    public void llamarImagen(usuario usu) throws SQLException, IOException {
+        Statement st = cn.createStatement();
+        ResultSet rs = st.executeQuery("SELECT imgperfil FROM usuarios where id=2;");
+        rs.next();
+        byte[] img = rs.getBytes("imgperfil");
+        Image imagen = getImage(img, false);
+        imagen = imagen.getScaledInstance(200, 200, Image.SCALE_DEFAULT);
+        foto.setIcon(new ImageIcon(imagen));
+        
+    }
+
+    private Image getImage(byte[] bytes, boolean isThumbnail) throws IOException {
+
+        ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
+        Iterator readers = ImageIO.getImageReadersByFormatName("png");
+        ImageReader reader = (ImageReader) readers.next();
+        Object source = bis; // File or InputStream
+        ImageInputStream iis = ImageIO.createImageInputStream(source);
+        reader.setInput(iis, true);
+        ImageReadParam param = reader.getDefaultReadParam();
+        if (isThumbnail) {
+
+            param.setSourceSubsampling(4, 4, 0, 0);
+
+        }
+        return reader.read(0, param);
+
+    }
+
     public void datosTabla(usuario usu1) throws SQLException {
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("Nombre");
         modelo.addColumn("Edad");
         modelo.addColumn("Foto");
         tabladatos.setModel(modelo);
-        
-        String datos[] = new String [3];
+
+        String datos[] = new String[3];
+
         try {
             Statement st = cn.createStatement();
-            ResultSet rs = st.executeQuery("SELECT nick, DATEDIFF(CURRENT_DATE, STR_TO_DATE(t.fechaNac, '%Y-%m-%d'))/365 AS edad, imgperfil FROM usuarios t;");
+            ResultSet rs = st.executeQuery("SELECT nick, TIMESTAMPDIFF(YEAR,fechaNac,CURDATE()) AS edad, imgperfil FROM usuarios t;");
+
             while (rs.next()) {
-                datos[0]=rs.getString(1);
-                datos[1]=rs.getString(2);
-                datos[2]=rs.getString(3);
-                
+                datos[0] = rs.getString(1);
+                datos[1] = rs.getString(2);
+                byte[] img = rs.getBytes("imgperfil");
+
                 modelo.addRow(datos);
             }
             tabladatos.setModel(modelo);
         } catch (SQLException sQLException) {
         }
     }
-    
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -116,25 +161,27 @@ public class NewJFrame extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(NewJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Lista.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(NewJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Lista.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(NewJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Lista.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(NewJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Lista.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new NewJFrame().setVisible(true);
+                new Lista().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel foto;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tabladatos;
     // End of variables declaration//GEN-END:variables
