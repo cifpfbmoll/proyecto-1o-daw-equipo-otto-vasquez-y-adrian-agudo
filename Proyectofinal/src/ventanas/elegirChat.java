@@ -51,6 +51,7 @@ public class elegirChat extends javax.swing.JFrame {
         irBut = new javax.swing.JToggleButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         printChatsField = new javax.swing.JTextArea();
+        atrasBut = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -71,21 +72,28 @@ public class elegirChat extends javax.swing.JFrame {
         printChatsField.setRows(5);
         jScrollPane2.setViewportView(printChatsField);
 
+        atrasBut.setText("Atrás");
+        atrasBut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                atrasButActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(28, 28, 28)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 615, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 615, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(34, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(introChatField)
+                        .addComponent(atrasBut, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(irBut, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(28, 28, 28))))
+                        .addComponent(introChatField, javax.swing.GroupLayout.PREFERRED_SIZE, 401, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(irBut, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -95,7 +103,8 @@ public class elegirChat extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(introChatField, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(irBut, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(irBut, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(atrasBut, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(64, 64, 64))
         );
 
@@ -132,6 +141,12 @@ public class elegirChat extends javax.swing.JFrame {
     private void introChatFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_introChatFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_introChatFieldActionPerformed
+
+    private void atrasButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atrasButActionPerformed
+        menuPrincipal menu=new menuPrincipal(usu);
+        menu.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_atrasButActionPerformed
 
     /**
      * @param args the command line arguments
@@ -172,6 +187,7 @@ public class elegirChat extends javax.swing.JFrame {
     
     public void printarChats(){
         try {
+            printChatsField.setEditable(false);
             Statement st = con.getConnection().createStatement();
             ResultSet rs = st.executeQuery("select nick from usuarios where id in(select distinct id_usuario0 from (select * from mensajes where id_usuario0=" + usu.getId() + " or id_usuario1=" + usu.getId() + ") as t1 where id_usuario0!=" + usu.getId() + " union select distinct id_usuario1 from (select * from mensajes where id_usuario0=" + usu.getId() + " or id_usuario1=" + usu.getId() + ") as t2 where id_usuario1!=" + usu.getId() + ")");
             while (rs.next()) { 
@@ -185,6 +201,7 @@ public class elegirChat extends javax.swing.JFrame {
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JToggleButton atrasBut;
     private javax.swing.JTextField introChatField;
     private javax.swing.JToggleButton irBut;
     private javax.swing.JScrollPane jScrollPane2;
