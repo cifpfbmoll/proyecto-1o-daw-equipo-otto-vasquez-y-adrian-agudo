@@ -136,7 +136,7 @@ public class elegirChat extends javax.swing.JFrame {
             }
         } catch (SQLException ex) {
                     Logger.getLogger(elegirChat.class.getName()).log(Level.SEVERE, null, ex);
-                }
+        }
     }//GEN-LAST:event_irButActionPerformed
 
     private void introChatFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_introChatFieldActionPerformed
