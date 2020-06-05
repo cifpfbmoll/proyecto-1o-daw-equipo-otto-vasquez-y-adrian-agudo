@@ -121,61 +121,55 @@ public class Lista extends javax.swing.JFrame {
         return reader.read(0, param);
 
     }
+    
+    public void rellenarTabla(String[] datos, String query, DefaultTableModel modelo){
+        try {
+                Statement st = cn.createStatement();
+                ResultSet rs = st.executeQuery(query);
+                
+
+                while (rs.next()) {
+                    datos[0] = rs.getString(1);
+                    datos[1] = rs.getString(2);
+                    datos[2] = rs.getString(3);
+
+                    modelo.addRow(datos);
+                }
+                tabladatos.setModel(modelo);
+            } catch (SQLException sQLException) {
+            }
+    }
 
     public void datosTabla(usuario usu) throws SQLException {
-        DefaultTableModel modelo = new DefaultTableModel();
+        DefaultTableModel modelo = new DefaultTableModel(){
+            //para definir si la celda es editable o no
+            @Override
+            public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+        };
         modelo.addColumn("Nombre");
         modelo.addColumn("Edad");
         modelo.addColumn("Descripcion");
         tabladatos.setModel(modelo);
-
+        String query;
         String datos[] = new String[3];
-
-        if (usu.getOrSex() == "homosexual") {
-            try {
-                Statement st = cn.createStatement();
-                ResultSet rs = st.executeQuery("SELECT nick, TIMESTAMPDIFF(YEAR,fechaNac,CURDATE()) AS edad, descripcion FROM usuarios t where orSex = 'homosexual' ;");
-
-                while (rs.next()) {
-                    datos[0] = rs.getString(1);
-                    datos[1] = rs.getString(2);
-                    datos[2] = rs.getString(3);
-
-                    modelo.addRow(datos);
-                }
-                tabladatos.setModel(modelo);
-            } catch (SQLException sQLException) {
-            }
-        } else if (usu.getOrSex()=="heterosexual") {
-            try {
-                Statement st = cn.createStatement();
-                ResultSet rs = st.executeQuery("SELECT nick, TIMESTAMPDIFF(YEAR,fechaNac,CURDATE()) AS edad, descripcion FROM usuarios t where orSex = 'heterosexual' ;");
-
-                while (rs.next()) {
-                    datos[0] = rs.getString(1);
-                    datos[1] = rs.getString(2);
-                    datos[2] = rs.getString(3);
-
-                    modelo.addRow(datos);
-                }
-                tabladatos.setModel(modelo);
-            } catch (SQLException sQLException) {
-            }
+        String nick =usu.getNick();;
+        if (usu.getOrSex() == "homosexual" &&  usu.getGenero()=="masculino") {
+            query = "SELECT nick, TIMESTAMPDIFF(YEAR,fechaNac,CURDATE()) AS edad, descripcion FROM usuarios where orSex = 'homosexual' AND genero = 'masculino' and nick not in(SELECT nick FROM usuarios where nick = '"+nick+"');;";
+            rellenarTabla(datos,query, modelo);
+        } else if (usu.getOrSex() == "homosexual" &&  usu.getGenero()=="femenino") {
+            query = "SELECT nick, TIMESTAMPDIFF(YEAR,fechaNac,CURDATE()) AS edad, descripcion FROM usuarios where orSex = 'homosexual' AND genero = 'femenino' and nick not in(SELECT nick FROM usuarios where nick = '"+nick+"');;";
+            rellenarTabla(datos,query, modelo);
+        } else if (usu.getOrSex() == "heterosexual" &&  usu.getGenero()=="femenino") {
+            query = "SELECT nick, TIMESTAMPDIFF(YEAR,fechaNac,CURDATE()) AS edad, descripcion FROM usuarios where orSex = 'heterosexual' AND genero = 'masculino' and nick not in(SELECT nick FROM usuarios where nick = '"+nick+"');;";
+            rellenarTabla(datos,query, modelo);
+        } else if (usu.getOrSex() == "homosexual" &&  usu.getGenero()=="masculino") {
+            query = "SELECT nick, TIMESTAMPDIFF(YEAR,fechaNac,CURDATE()) AS edad, descripcion FROM usuarios where orSex = 'heterosexual' AND genero = 'femenino' and nick not in(SELECT nick FROM usuarios where nick = '"+nick+"');;";
+            rellenarTabla(datos,query, modelo);
         } else {
-            try {
-                Statement st = cn.createStatement();
-                ResultSet rs = st.executeQuery("SELECT nick, TIMESTAMPDIFF(YEAR,fechaNac,CURDATE()) AS edad, descripcion FROM usuarios t where orSex = 'bisexual' ;");
-
-                while (rs.next()) {
-                    datos[0] = rs.getString(1);
-                    datos[1] = rs.getString(2);
-                    datos[2] = rs.getString(3);
-
-                    modelo.addRow(datos);
-                }
-                tabladatos.setModel(modelo);
-            } catch (SQLException sQLException) {
-            }
+            query = "SELECT nick, TIMESTAMPDIFF(YEAR,fechaNac,CURDATE()) AS edad, descripcion FROM usuarios where orSex = 'bisexual' and nick not in(SELECT nick FROM usuarios where nick = '"+nick+"');";
+            rellenarTabla(datos, query, modelo);
         }
 
     }
