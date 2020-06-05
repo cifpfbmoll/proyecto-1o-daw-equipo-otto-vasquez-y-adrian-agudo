@@ -190,7 +190,7 @@ public class registro extends javax.swing.JFrame {
                 aceptarButActionPerformed(evt);
             }
         });
-        getContentPane().add(aceptarBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 680, -1, -1));
+        getContentPane().add(aceptarBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 640, -1, -1));
 
         atrasBut.setText("ATRÁS");
         atrasBut.addActionListener(new java.awt.event.ActionListener() {
@@ -198,7 +198,7 @@ public class registro extends javax.swing.JFrame {
                 atrasButActionPerformed(evt);
             }
         });
-        getContentPane().add(atrasBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 680, -1, -1));
+        getContentPane().add(atrasBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 640, -1, -1));
 
         provinciaField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
