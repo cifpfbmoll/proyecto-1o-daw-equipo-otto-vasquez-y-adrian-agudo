@@ -13,11 +13,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReadParam;
 import javax.imageio.ImageReader;
 import javax.imageio.stream.ImageInputStream;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import proyectofinal.conectarBBDD;
 import proyectofinal.usuario;
 
@@ -28,18 +31,20 @@ import proyectofinal.usuario;
 public class match extends javax.swing.JFrame {
 
     private usuario usu;
-    
+    private int id=0;
+
     /**
      * Creates new form match
      */
     public match() {
         initComponents();
     }
-    
-    public match(usuario usu){
-        this.usu=usu;
+
+    public match(usuario usu) throws SQLException, IOException {
+        this.usu = usu;
         initComponents();
-        
+        llamarImagen(usu,id);
+
     }
 
     public usuario getUsu() {
@@ -49,15 +54,14 @@ public class match extends javax.swing.JFrame {
     public void setUsu(usuario usu) {
         this.usu = usu;
     }
-    
-    
 
     conectarBBDD con = new conectarBBDD();
     Connection cn = con.getConnection();
-    
-    public void llamarImagen(usuario usu) throws SQLException, IOException {
+
+    public void llamarImagen(usuario usu, int id) throws SQLException, IOException {
+        String nick =usu.getNick();;
         Statement st = cn.createStatement();
-        ResultSet rs = st.executeQuery("SELECT imgperfil FROM usuarios;");
+        ResultSet rs = st.executeQuery("SELECT imgperfil FROM usuarios where id= " + id + " AND genero = 'masculino' and nick not in(SELECT nick FROM usuarios where nick = '"+nick+"');");
         rs.next();
         byte[] img = rs.getBytes("imgperfil");
         Image imagen = getImage(img, false);
@@ -65,25 +69,47 @@ public class match extends javax.swing.JFrame {
         foto.setIcon(new ImageIcon(imagen));
 
     }
-    
+
     private Image getImage(byte[] bytes, boolean isThumbnail) throws IOException {
 
-        ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
-        Iterator readers = ImageIO.getImageReadersByFormatName("png");
-        ImageReader reader = (ImageReader) readers.next();
-        Object source = bis; // File or InputStream
-        ImageInputStream iis = ImageIO.createImageInputStream(source);
-        reader.setInput(iis, true);
-        ImageReadParam param = reader.getDefaultReadParam();
-        if (isThumbnail) {
-
-            param.setSourceSubsampling(4, 4, 0, 0);
-
+        ImageReader reader = null;
+        ImageReadParam param = null;
+        try {
+            ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
+            Iterator readers = ImageIO.getImageReadersByFormatName("png");
+            reader = (ImageReader) readers.next();
+            Object source = bis; // File or InputStream
+            ImageInputStream iis = ImageIO.createImageInputStream(source);
+            reader.setInput(iis, true);
+            param = reader.getDefaultReadParam();
+            if (isThumbnail) {
+                
+                param.setSourceSubsampling(4, 4, 0, 0);
+                
+            }
+        } catch (IOException iOException) {
+            JOptionPane.showMessageDialog(null, "png error");
+        }
+        try {
+            ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
+            Iterator readers = ImageIO.getImageReadersByFormatName("jpg");
+            reader = (ImageReader) readers.next();
+            Object source = bis; // File or InputStream
+            ImageInputStream iis = ImageIO.createImageInputStream(source);
+            reader.setInput(iis, true);
+            param = reader.getDefaultReadParam();
+            if (isThumbnail) {
+                
+                param.setSourceSubsampling(4, 4, 0, 0);
+                
+            }
+        } catch (IOException iOException) {
+            JOptionPane.showMessageDialog(null, "jpg error");
         }
         return reader.read(0, param);
 
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -94,8 +120,16 @@ public class match extends javax.swing.JFrame {
     private void initComponents() {
 
         foto = new javax.swing.JLabel();
+        likeBut = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        likeBut.setText("Like");
+        likeBut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                likeButActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -104,18 +138,37 @@ public class match extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(88, 88, 88)
                 .addComponent(foto, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(108, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(likeBut)
+                .addContainerGap(47, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(57, 57, 57)
-                .addComponent(foto, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(57, 57, 57)
+                        .addComponent(foto, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(156, 156, 156)
+                        .addComponent(likeBut)))
                 .addContainerGap(82, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void likeButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_likeButActionPerformed
+        try {
+            id++;
+            llamarImagen(usu, id);
+        } catch (SQLException ex) {
+            Logger.getLogger(match.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(match.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }//GEN-LAST:event_likeButActionPerformed
 
     /**
      * @param args the command line arguments
@@ -154,5 +207,6 @@ public class match extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel foto;
+    private javax.swing.JButton likeBut;
     // End of variables declaration//GEN-END:variables
 }

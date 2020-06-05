@@ -146,10 +146,16 @@ public class menuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_chatButActionPerformed
 
     private void matchButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_matchButActionPerformed
-        match match =new match(usu);
-        match.setVisible(true);
-        match.pack();
-        this.dispose();
+        try {
+            match match =new match(usu);
+            match.setVisible(true);
+            match.pack();
+            this.dispose();
+        } catch (SQLException ex) {
+            Logger.getLogger(menuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(menuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_matchButActionPerformed
 
     private void listaButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listaButActionPerformed
