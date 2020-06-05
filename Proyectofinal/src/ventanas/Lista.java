@@ -5,6 +5,7 @@
  */
 package ventanas;
 
+import proyectofinal.usuario;
 import java.awt.Image;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;

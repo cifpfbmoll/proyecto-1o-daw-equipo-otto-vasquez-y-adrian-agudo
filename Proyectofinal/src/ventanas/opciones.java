@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package ventanas;
+import proyectofinal.usuario;
 import com.mysql.jdbc.MysqlDataTruncation;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -423,13 +424,11 @@ public class opciones extends javax.swing.JFrame {
     }//GEN-LAST:event_camResiButActionPerformed
 
     private void atrasButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atrasButActionPerformed
-        try {
+
             menuPrincipal menu=new menuPrincipal(usu);
             menu.setVisible(true);
             this.dispose();
-        } catch (SQLException ex) {
-            Logger.getLogger(opciones.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
     }//GEN-LAST:event_atrasButActionPerformed
 
     /**

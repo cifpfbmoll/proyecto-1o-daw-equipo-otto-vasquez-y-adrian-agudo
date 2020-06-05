@@ -5,6 +5,7 @@
  */
 package ventanas;
 
+import proyectofinal.usuario;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -119,7 +120,7 @@ public class login extends javax.swing.JFrame {
                 if (ExisteUsu.next()){
                     if(ExisteUsu.getString("contraseña").equals(password)){
                         usuario usu=new usuario();
-                        usu.crearUsuario(ExisteUsu.getInt("id"),ExisteUsu.getString("nick"),ExisteUsu.getString("contraseña"),ExisteUsu.getString("nombre"),ExisteUsu.getString("apellidos"),ExisteUsu.getString("genero"),ExisteUsu.getString("orSex"),ExisteUsu.getString("provincia"),ExisteUsu.getString("fechaNac"),ExisteUsu.getString("descripcion"));
+                        usu.crearUsuario(ExisteUsu.getInt("id"), ExisteUsu.getString("nick"), ExisteUsu.getString("contraseña"), ExisteUsu.getString("nombre"), ExisteUsu.getString("apellidos"), ExisteUsu.getString("genero"), ExisteUsu.getString("orSex"), ExisteUsu.getString("provincia"), ExisteUsu.getString("fechaNac"), ExisteUsu.getString("descripcion"));
                         menuPrincipal menu=new menuPrincipal(usu);
                         menu.setVisible(true);
                         menu.setLabel();

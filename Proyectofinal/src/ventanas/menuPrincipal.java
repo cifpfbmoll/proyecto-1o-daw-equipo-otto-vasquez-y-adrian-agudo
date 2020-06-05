@@ -5,6 +5,8 @@
  */
 package ventanas;
 
+import proyectofinal.usuario;
+
 /**
  *
  * @author ADRI
