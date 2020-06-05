@@ -423,9 +423,13 @@ public class opciones extends javax.swing.JFrame {
     }//GEN-LAST:event_camResiButActionPerformed
 
     private void atrasButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atrasButActionPerformed
-        menuPrincipal menu=new menuPrincipal(getUsu());
-        menu.setVisible(true);
-        this.dispose();
+        try {
+            menuPrincipal menu=new menuPrincipal(usu);
+            menu.setVisible(true);
+            this.dispose();
+        } catch (SQLException ex) {
+            Logger.getLogger(opciones.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_atrasButActionPerformed
 
     /**
