@@ -27,12 +27,30 @@ import proyectofinal.usuario;
  */
 public class match extends javax.swing.JFrame {
 
+    private usuario usu;
+    
     /**
      * Creates new form match
      */
     public match() {
         initComponents();
     }
+    
+    public match(usuario usu){
+        this.usu=usu;
+        initComponents();
+        
+    }
+
+    public usuario getUsu() {
+        return usu;
+    }
+
+    public void setUsu(usuario usu) {
+        this.usu = usu;
+    }
+    
+    
 
     conectarBBDD con = new conectarBBDD();
     Connection cn = con.getConnection();
