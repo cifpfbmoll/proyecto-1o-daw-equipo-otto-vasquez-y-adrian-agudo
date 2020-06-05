@@ -30,8 +30,11 @@ import proyectofinal.usuario;
  */
 public class match extends javax.swing.JFrame {
 
+    conectarBBDD con = new conectarBBDD();
+    Connection cn = con.getConnection();
+    public static ResultSet rs = null;
+    public static Statement st = null;
     private usuario usu;
-    private int id=0;
 
     /**
      * Creates new form match
@@ -43,7 +46,7 @@ public class match extends javax.swing.JFrame {
     public match(usuario usu) throws SQLException, IOException {
         this.usu = usu;
         initComponents();
-        llamarImagen(usu,id);
+        llamarImagen(usu);
 
     }
 
@@ -55,19 +58,23 @@ public class match extends javax.swing.JFrame {
         this.usu = usu;
     }
 
-    conectarBBDD con = new conectarBBDD();
-    Connection cn = con.getConnection();
-
-    public void llamarImagen(usuario usu, int id) throws SQLException, IOException {
-        String nick =usu.getNick();;
-        Statement st = cn.createStatement();
-        ResultSet rs = st.executeQuery("SELECT imgperfil FROM usuarios where id= " + id + " AND genero = 'masculino' and nick not in(SELECT nick FROM usuarios where nick = '"+nick+"');");
-        rs.next();
+    public void llamarImagen(usuario usu) throws SQLException, IOException {
+        String nick = usu.getNick();
+        String statement = "SELECT imgperfil FROM usuarios where nick not in(SELECT nick FROM usuarios where nick = '" + nick + "');";
+        st = cn.createStatement();
+        rs = st.executeQuery(statement);
+        rs.first();
         byte[] img = rs.getBytes("imgperfil");
         Image imagen = getImage(img, false);
         imagen = imagen.getScaledInstance(200, 200, Image.SCALE_DEFAULT);
         foto.setIcon(new ImageIcon(imagen));
+    }
 
+    public void siguienteImagen(usuario usu) throws SQLException, IOException {
+        byte[] img = rs.getBytes("imgperfil");
+        Image imagen = getImage(img, false);
+        imagen = imagen.getScaledInstance(200, 200, Image.SCALE_DEFAULT);
+        foto.setIcon(new ImageIcon(imagen));
     }
 
     private Image getImage(byte[] bytes, boolean isThumbnail) throws IOException {
@@ -83,28 +90,12 @@ public class match extends javax.swing.JFrame {
             reader.setInput(iis, true);
             param = reader.getDefaultReadParam();
             if (isThumbnail) {
-                
+
                 param.setSourceSubsampling(4, 4, 0, 0);
-                
+
             }
         } catch (IOException iOException) {
             JOptionPane.showMessageDialog(null, "png error");
-        }
-        try {
-            ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
-            Iterator readers = ImageIO.getImageReadersByFormatName("jpg");
-            reader = (ImageReader) readers.next();
-            Object source = bis; // File or InputStream
-            ImageInputStream iis = ImageIO.createImageInputStream(source);
-            reader.setInput(iis, true);
-            param = reader.getDefaultReadParam();
-            if (isThumbnail) {
-                
-                param.setSourceSubsampling(4, 4, 0, 0);
-                
-            }
-        } catch (IOException iOException) {
-            JOptionPane.showMessageDialog(null, "jpg error");
         }
         return reader.read(0, param);
 
@@ -160,8 +151,13 @@ public class match extends javax.swing.JFrame {
 
     private void likeButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_likeButActionPerformed
         try {
-            id++;
-            llamarImagen(usu, id);
+            if (rs.isLast() == false) {
+                rs.next();
+                siguienteImagen(usu);
+            } else {
+                JOptionPane.showMessageDialog(null, "Has llegado al final");
+            }
+
         } catch (SQLException ex) {
             Logger.getLogger(match.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
