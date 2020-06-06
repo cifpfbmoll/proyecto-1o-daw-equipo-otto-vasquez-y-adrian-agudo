@@ -455,6 +455,7 @@ public class opciones extends javax.swing.JFrame {
             update.executeUpdate();
             update.close();
             guardarFoto.hide();
+            rutaimg.hide();
             fotoActual();
 
         } catch (SQLException ex) {
