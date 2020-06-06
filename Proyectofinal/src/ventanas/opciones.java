@@ -62,6 +62,10 @@ public class opciones extends javax.swing.JFrame {
         camApellidosBut = new javax.swing.JButton();
         camDescBut = new javax.swing.JButton();
         camGenBut = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        camLugarBut = new javax.swing.JButton();
+        camEdadBut = new javax.swing.JButton();
+        camSexoBut = new javax.swing.JButton();
         atrasBut = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -126,6 +130,24 @@ public class opciones extends javax.swing.JFrame {
             }
         });
 
+        jLabel3.setText("Modificar filtros de búsqueda");
+
+        camLugarBut.setText("Lugar");
+        camLugarBut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                camLugarButActionPerformed(evt);
+            }
+        });
+
+        camEdadBut.setText("Edad");
+        camEdadBut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                camEdadButActionPerformed(evt);
+            }
+        });
+
+        camSexoBut.setText("Sexo");
+
         atrasBut.setText("Atrás");
         atrasBut.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -150,12 +172,18 @@ public class opciones extends javax.swing.JFrame {
                                 .addComponent(atrasBut)
                                 .addGroup(layout.createSequentialGroup()
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addGap(43, 43, 43)
-                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                .addComponent(camResiBut, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(camNombreUsuBut)
-                                                .addComponent(camContraBut, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                                .addGap(43, 43, 43)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                    .addComponent(camResiBut, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(camNombreUsuBut)
+                                                    .addComponent(camContraBut, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(camSexoBut, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(camEdadBut, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(camLugarBut, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(jLabel3)
                                         .addGroup(layout.createSequentialGroup()
                                             .addGap(43, 43, 43)
                                             .addComponent(camFechaNacBut, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -190,9 +218,17 @@ public class opciones extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(camFechaNacBut)
                     .addComponent(camGenBut))
-                .addGap(80, 80, 80)
+                .addGap(82, 82, 82)
+                .addComponent(jLabel3)
+                .addGap(18, 18, 18)
+                .addComponent(camLugarBut)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(camEdadBut)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(camSexoBut)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
                 .addComponent(atrasBut)
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addGap(39, 39, 39))
         );
 
         pack();
@@ -272,6 +308,14 @@ public class opciones extends javax.swing.JFrame {
             System.out.println("Hubo un problema");
         }
     }//GEN-LAST:event_camDescButActionPerformed
+
+    private void camLugarButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_camLugarButActionPerformed
+        
+    }//GEN-LAST:event_camLugarButActionPerformed
+
+    private void camEdadButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_camEdadButActionPerformed
+       
+    }//GEN-LAST:event_camEdadButActionPerformed
 
     private void camApellidosButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_camApellidosButActionPerformed
         try {
@@ -427,12 +471,16 @@ public class opciones extends javax.swing.JFrame {
     private javax.swing.JButton camApellidosBut;
     private javax.swing.JButton camContraBut;
     private javax.swing.JButton camDescBut;
+    private javax.swing.JButton camEdadBut;
     private javax.swing.JButton camFechaNacBut;
     private javax.swing.JButton camGenBut;
+    private javax.swing.JButton camLugarBut;
     private javax.swing.JButton camNombreBut;
     private javax.swing.JButton camNombreUsuBut;
     private javax.swing.JButton camResiBut;
+    private javax.swing.JButton camSexoBut;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     // End of variables declaration//GEN-END:variables
 }
