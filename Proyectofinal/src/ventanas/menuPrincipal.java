@@ -60,17 +60,23 @@ public class menuPrincipal extends javax.swing.JFrame {
         chatBut = new javax.swing.JButton();
         listaBut = new javax.swing.JButton();
         instrucciones = new javax.swing.JButton();
+        fondo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jLabel1.setFont(new java.awt.Font("Lucida Console", 1, 14)); // NOI18N
         jLabel1.setText("Bienvenido");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 30, -1, 20));
+        getContentPane().add(nomUsuSalida, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 30, 70, 20));
 
-        opcButon.setText("opsiones");
+        opcButon.setText("Opciones");
         opcButon.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 opcButonActionPerformed(evt);
             }
         });
+        getContentPane().add(opcButon, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 90, -1, -1));
 
         matchBut.setText("Match");
         matchBut.addActionListener(new java.awt.event.ActionListener() {
@@ -78,6 +84,7 @@ public class menuPrincipal extends javax.swing.JFrame {
                 matchButActionPerformed(evt);
             }
         });
+        getContentPane().add(matchBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 140, -1, -1));
 
         chatBut.setText("Chat");
         chatBut.addActionListener(new java.awt.event.ActionListener() {
@@ -85,65 +92,26 @@ public class menuPrincipal extends javax.swing.JFrame {
                 chatButActionPerformed(evt);
             }
         });
+        getContentPane().add(chatBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 200, -1, -1));
 
-        listaBut.setText("Lista");
+        listaBut.setText("Lista de usuarios");
         listaBut.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 listaButActionPerformed(evt);
             }
         });
+        getContentPane().add(listaBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 190, -1, -1));
 
-        instrucciones.setText("instrucciones");
+        instrucciones.setText("Instrucciones");
         instrucciones.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 instruccionesActionPerformed(evt);
             }
         });
+        getContentPane().add(instrucciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 90, -1, -1));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(135, 135, 135)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(394, 394, 394)
-                        .addComponent(nomUsuSalida))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(opcButon)
-                                .addGap(273, 273, 273)
-                                .addComponent(instrucciones))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(listaBut)
-                                .addGap(114, 114, 114)
-                                .addComponent(matchBut)
-                                .addGap(115, 115, 115)
-                                .addComponent(chatBut)))
-                        .addGap(19, 19, 19)))
-                .addContainerGap(215, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(nomUsuSalida))
-                .addGap(51, 51, 51)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(opcButon)
-                    .addComponent(instrucciones))
-                .addGap(79, 79, 79)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(matchBut)
-                    .addComponent(chatBut)
-                    .addComponent(listaBut))
-                .addContainerGap(417, Short.MAX_VALUE))
-        );
+        fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/fondo menu.jpg"))); // NOI18N
+        getContentPane().add(fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(-380, -110, 970, 430));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -243,6 +211,7 @@ public class menuPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton chatBut;
+    private javax.swing.JLabel fondo;
     private javax.swing.JButton instrucciones;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JButton listaBut;

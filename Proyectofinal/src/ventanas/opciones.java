@@ -129,15 +129,20 @@ public class opciones extends javax.swing.JFrame {
         fotoPerf = new javax.swing.JLabel();
         rutaimg = new javax.swing.JLabel();
         guardarFoto = new javax.swing.JButton();
+        fondo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("OPCIONES");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 20, -1, -1));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 20, -1, -1));
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Modificar perfíl");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 50, -1, -1));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, -1, -1));
 
         camContraBut.setText("Cambiar contraseña");
         camContraBut.addActionListener(new java.awt.event.ActionListener() {
@@ -145,7 +150,7 @@ public class opciones extends javax.swing.JFrame {
                 camContraButActionPerformed(evt);
             }
         });
-        getContentPane().add(camContraBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(54, 118, 188, -1));
+        getContentPane().add(camContraBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 120, 190, -1));
 
         camNombreUsuBut.setText("Cambiar nombre de usuario");
         camNombreUsuBut.addActionListener(new java.awt.event.ActionListener() {
@@ -153,7 +158,7 @@ public class opciones extends javax.swing.JFrame {
                 camNombreUsuButActionPerformed(evt);
             }
         });
-        getContentPane().add(camNombreUsuBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(52, 84, 190, -1));
+        getContentPane().add(camNombreUsuBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 80, 190, -1));
 
         camResiBut.setText("Cambiar residencia");
         camResiBut.addActionListener(new java.awt.event.ActionListener() {
@@ -161,7 +166,7 @@ public class opciones extends javax.swing.JFrame {
                 camResiButActionPerformed(evt);
             }
         });
-        getContentPane().add(camResiBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(54, 152, 188, -1));
+        getContentPane().add(camResiBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 160, 190, -1));
 
         camFechaNacBut.setText("Cambiar fecha nacimiento");
         camFechaNacBut.addActionListener(new java.awt.event.ActionListener() {
@@ -169,7 +174,7 @@ public class opciones extends javax.swing.JFrame {
                 camFechaNacButActionPerformed(evt);
             }
         });
-        getContentPane().add(camFechaNacBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(54, 181, 188, -1));
+        getContentPane().add(camFechaNacBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 200, 190, -1));
 
         camNombreBut.setText("Cambiar nombre");
         camNombreBut.addActionListener(new java.awt.event.ActionListener() {
@@ -177,7 +182,7 @@ public class opciones extends javax.swing.JFrame {
                 camNombreButActionPerformed(evt);
             }
         });
-        getContentPane().add(camNombreBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(496, 84, 255, -1));
+        getContentPane().add(camNombreBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 80, 220, -1));
 
         camApellidosBut.setText("Cambiar apellidos");
         camApellidosBut.addActionListener(new java.awt.event.ActionListener() {
@@ -185,7 +190,7 @@ public class opciones extends javax.swing.JFrame {
                 camApellidosButActionPerformed(evt);
             }
         });
-        getContentPane().add(camApellidosBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(496, 118, 255, -1));
+        getContentPane().add(camApellidosBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 120, 220, -1));
 
         camDescBut.setText("Cambiar descripción");
         camDescBut.addActionListener(new java.awt.event.ActionListener() {
@@ -193,7 +198,7 @@ public class opciones extends javax.swing.JFrame {
                 camDescButActionPerformed(evt);
             }
         });
-        getContentPane().add(camDescBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(496, 152, 255, -1));
+        getContentPane().add(camDescBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 160, 220, -1));
 
         camGenBut.setText("Cambiar género");
         camGenBut.addActionListener(new java.awt.event.ActionListener() {
@@ -201,7 +206,7 @@ public class opciones extends javax.swing.JFrame {
                 camGenButActionPerformed(evt);
             }
         });
-        getContentPane().add(camGenBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(496, 181, 255, -1));
+        getContentPane().add(camGenBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 200, 220, -1));
 
         atrasBut.setText("Atrás");
         atrasBut.addActionListener(new java.awt.event.ActionListener() {
@@ -217,9 +222,12 @@ public class opciones extends javax.swing.JFrame {
                 cambiarFotoActionPerformed(evt);
             }
         });
-        getContentPane().add(cambiarFoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(54, 215, 188, -1));
+        getContentPane().add(cambiarFoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 240, 190, -1));
         getContentPane().add(fotoPerf, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 240, 200, 200));
-        getContentPane().add(rutaimg, new org.netbeans.lib.awtextra.AbsoluteConstraints(54, 244, 188, 23));
+
+        rutaimg.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        rutaimg.setForeground(new java.awt.Color(255, 255, 255));
+        getContentPane().add(rutaimg, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 280, 188, 23));
 
         guardarFoto.setText("Guardar foto");
         guardarFoto.addActionListener(new java.awt.event.ActionListener() {
@@ -228,6 +236,10 @@ public class opciones extends javax.swing.JFrame {
             }
         });
         getContentPane().add(guardarFoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 450, -1, -1));
+
+        fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/loginsepia.png"))); // NOI18N
+        fondo.setText("jLabel3");
+        getContentPane().add(fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 780, 530));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -511,6 +523,7 @@ public class opciones extends javax.swing.JFrame {
     private javax.swing.JButton camNombreUsuBut;
     private javax.swing.JButton camResiBut;
     private javax.swing.JButton cambiarFoto;
+    private javax.swing.JLabel fondo;
     private javax.swing.JLabel fotoPerf;
     private javax.swing.JButton guardarFoto;
     private javax.swing.JLabel jLabel1;

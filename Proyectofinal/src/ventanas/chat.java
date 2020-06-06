@@ -50,12 +50,17 @@ public class chat extends javax.swing.JFrame {
         mensajeField = new javax.swing.JTextField();
         enviarBut = new javax.swing.JButton();
         atrasBut = new javax.swing.JButton();
+        fondo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         chatField.setColumns(20);
         chatField.setRows(5);
         jScrollPane1.setViewportView(chatField);
+
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(23, 25, 671, 437));
+        getContentPane().add(mensajeField, new org.netbeans.lib.awtextra.AbsoluteConstraints(23, 495, 526, 49));
 
         enviarBut.setText("Enviar");
         enviarBut.addActionListener(new java.awt.event.ActionListener() {
@@ -63,6 +68,7 @@ public class chat extends javax.swing.JFrame {
                 enviarButActionPerformed(evt);
             }
         });
+        getContentPane().add(enviarBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(555, 495, 152, 21));
 
         atrasBut.setText("Atrás");
         atrasBut.addActionListener(new java.awt.event.ActionListener() {
@@ -70,37 +76,10 @@ public class chat extends javax.swing.JFrame {
                 atrasButActionPerformed(evt);
             }
         });
+        getContentPane().add(atrasBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(555, 522, 152, 22));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 671, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(mensajeField, javax.swing.GroupLayout.PREFERRED_SIZE, 526, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(atrasBut, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)
-                            .addComponent(enviarBut, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 437, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(mensajeField, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(enviarBut, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(atrasBut, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(34, Short.MAX_VALUE))
-        );
+        fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/logingris.jpg"))); // NOI18N
+        getContentPane().add(fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 720, 580));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -172,6 +151,7 @@ public class chat extends javax.swing.JFrame {
     private javax.swing.JButton atrasBut;
     private javax.swing.JTextArea chatField;
     private javax.swing.JButton enviarBut;
+    private javax.swing.JLabel fondo;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField mensajeField;
     // End of variables declaration//GEN-END:variables

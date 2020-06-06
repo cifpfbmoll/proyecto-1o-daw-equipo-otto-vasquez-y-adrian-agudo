@@ -71,6 +71,7 @@ public class Lista extends javax.swing.JFrame {
         introNickField = new javax.swing.JTextField();
         atrasBut = new javax.swing.JButton();
         irBut = new javax.swing.JButton();
+        fondo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -112,6 +113,9 @@ public class Lista extends javax.swing.JFrame {
             }
         });
         getContentPane().add(irBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 390, 60, 40));
+
+        fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/loginbrillo.png"))); // NOI18N
+        getContentPane().add(fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 770, 570));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -315,6 +319,7 @@ public class Lista extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton atrasBut;
+    private javax.swing.JLabel fondo;
     private javax.swing.JTextField introNickField;
     private javax.swing.JButton irBut;
     private javax.swing.JScrollPane jScrollPane1;

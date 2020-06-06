@@ -157,6 +157,7 @@ public class match extends javax.swing.JFrame {
         txt = new javax.swing.JScrollPane();
         descripcion = new javax.swing.JTextArea();
         atrasBut = new javax.swing.JButton();
+        fondo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -200,6 +201,9 @@ public class match extends javax.swing.JFrame {
             }
         });
         getContentPane().add(atrasBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 520, -1, -1));
+
+        fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/fondo instrucciones.jpg"))); // NOI18N
+        getContentPane().add(fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 700, 600));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -251,7 +255,7 @@ public class match extends javax.swing.JFrame {
 
     private void DislikeButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DislikeButActionPerformed
         try {
-            if (rs.isLast() == false) {
+            if (!rs.isAfterLast()) {
                 rs.next();
                 siguienteInfo(usu);
             } else {
@@ -311,6 +315,7 @@ public class match extends javax.swing.JFrame {
     private javax.swing.JButton atrasBut;
     private javax.swing.JTextArea descripcion;
     private javax.swing.JLabel edad;
+    private javax.swing.JLabel fondo;
     private javax.swing.JLabel foto;
     private javax.swing.JButton likeBut;
     private javax.swing.JLabel nick;
