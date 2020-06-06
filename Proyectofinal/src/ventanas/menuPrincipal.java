@@ -5,6 +5,9 @@
  */
 package ventanas;
 
+import java.io.File;
+
+import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -56,6 +59,7 @@ public class menuPrincipal extends javax.swing.JFrame {
         matchBut = new javax.swing.JButton();
         chatBut = new javax.swing.JButton();
         listaBut = new javax.swing.JButton();
+        instrucciones = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -89,6 +93,13 @@ public class menuPrincipal extends javax.swing.JFrame {
             }
         });
 
+        instrucciones.setText("instrucciones");
+        instrucciones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                instruccionesActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -101,15 +112,19 @@ public class menuPrincipal extends javax.swing.JFrame {
                         .addGap(394, 394, 394)
                         .addComponent(nomUsuSalida))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(opcButon)
-                            .addComponent(listaBut))
-                        .addGap(114, 114, 114)
-                        .addComponent(matchBut)
-                        .addGap(115, 115, 115)
-                        .addComponent(chatBut)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(opcButon)
+                                .addGap(273, 273, 273)
+                                .addComponent(instrucciones))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(listaBut)
+                                .addGap(114, 114, 114)
+                                .addComponent(matchBut)
+                                .addGap(115, 115, 115)
+                                .addComponent(chatBut)))
                         .addGap(19, 19, 19)))
-                .addContainerGap(241, Short.MAX_VALUE))
+                .addContainerGap(215, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -119,7 +134,9 @@ public class menuPrincipal extends javax.swing.JFrame {
                     .addComponent(jLabel1)
                     .addComponent(nomUsuSalida))
                 .addGap(51, 51, 51)
-                .addComponent(opcButon)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(opcButon)
+                    .addComponent(instrucciones))
                 .addGap(79, 79, 79)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(matchBut)
@@ -166,6 +183,29 @@ public class menuPrincipal extends javax.swing.JFrame {
             this.dispose();
     }//GEN-LAST:event_listaButActionPerformed
 
+    private void instruccionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_instruccionesActionPerformed
+        try {
+            String instrucTXT="Bienvenido: "+usu.getNick()+"\n\nA continuación le explicaremos el funcionamiento de la aplicación."
+            + "Si nos fijamos en el menú principal nos encontraremos con 5 botones, el de intrucciones, el de match, el de lista,"
+            + "el de chat y el de opciones:\n\n\nMatch: Seleccionará quien le parece atractivo, ya que podrá ver la foto del usuario "
+            + "en cuestión, los usuarios son expuestos de uno en uno.\n\nLista: Podrá ver todos los usuarios que se adaptan a usted"
+            + ", sin embrago no podrá ver sus fotos.\n\nChat: Cuando tanto tú como el otro usuario hayáis dado like, se producirá "
+            + "un match, el cual os permitirá abrir uun chat. Para hablar introduciras el nick de la persona a la que quieres"
+            + " hablar (dispones una lista de las personas con las que has hecho match).\nOpciones: Aquí puedes cambiar los valores "
+            + "de tu perfil, como nick o contraseña.\n\n\nTodos los usuarios mostrados en Match y Lista se adaptan a su orientación sexual y género."
+            + "\n\n(Para mayor comprensión puede leer el txt generado con las mismas instrucciones)";
+            File archivo = new File ("C:/Users/Public/instrucciones.txt");
+            FileWriter ficheroEscribir = new FileWriter(archivo);
+            ficheroEscribir.write(instrucTXT);
+            ficheroEscribir.close();
+            instrucciones instruc=new instrucciones(usu,archivo);
+            instruc.setVisible(true);
+            this.dispose();
+        } catch (IOException ex) {
+            Logger.getLogger(menuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }    
+    }//GEN-LAST:event_instruccionesActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -203,6 +243,7 @@ public class menuPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton chatBut;
+    private javax.swing.JButton instrucciones;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JButton listaBut;
     private javax.swing.JButton matchBut;

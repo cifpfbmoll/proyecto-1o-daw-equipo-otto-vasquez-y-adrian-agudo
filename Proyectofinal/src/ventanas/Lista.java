@@ -51,19 +51,14 @@ public class Lista extends javax.swing.JFrame {
 
 
     public Lista(usuario usu) {
+        
         try {
             this.usu1 = usu;
             initComponents();
-            datosTabla(usu);
-            llamarImagen(usu);
+            datosTabla(usu1);
         } catch (SQLException ex) {
             Logger.getLogger(Lista.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(Lista.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
-
     }
 
     /**
@@ -187,33 +182,7 @@ public class Lista extends javax.swing.JFrame {
      */
     conectarBBDD con = new conectarBBDD();
     Connection cn = con.getConnection();
-
-    public void llamarImagen(usuario usu) throws SQLException, IOException {
-        Statement st = cn.createStatement();
-        ResultSet rs = st.executeQuery("SELECT imgperfil FROM usuarios where id=2;");
-        rs.next();
-        byte[] img = rs.getBytes("imgperfil");
-        Image imagen = getImage(img, false);
-        imagen = imagen.getScaledInstance(200, 200, Image.SCALE_DEFAULT);
-    }
-
-    private Image getImage(byte[] bytes, boolean isThumbnail) throws IOException {
-
-        ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
-        Iterator readers = ImageIO.getImageReadersByFormatName("png");
-        ImageReader reader = (ImageReader) readers.next();
-        Object source = bis; // File or InputStream
-        ImageInputStream iis = ImageIO.createImageInputStream(source);
-        reader.setInput(iis, true);
-        ImageReadParam param = reader.getDefaultReadParam();
-        if (isThumbnail) {
-
-            param.setSourceSubsampling(4, 4, 0, 0);
-
-        }
-        return reader.read(0, param);
-    }
-    
+   
     public void rellenarTabla(String[] datos, String query, DefaultTableModel modelo){
         try {
                 Statement st = cn.createStatement();
