@@ -6,22 +6,16 @@
 package ventanas;
 
 import proyectofinal.usuario;
-import java.awt.Image;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Iterator;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.imageio.ImageIO;
-import javax.imageio.ImageReadParam;
-import javax.imageio.ImageReader;
-import javax.imageio.stream.ImageInputStream;
-import javax.swing.ImageIcon;
+
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import proyectofinal.conectarBBDD;
@@ -51,7 +45,6 @@ public class Lista extends javax.swing.JFrame {
 
 
     public Lista(usuario usu) {
-        
         try {
             this.usu1 = usu;
             initComponents();
@@ -171,7 +164,7 @@ public class Lista extends javax.swing.JFrame {
     }//GEN-LAST:event_irButActionPerformed
 
     private void atrasButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atrasButActionPerformed
-        menuPrincipal menu=new menuPrincipal();
+        menuPrincipal menu=new menuPrincipal(usu1);
         menu.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_atrasButActionPerformed
@@ -202,40 +195,39 @@ public class Lista extends javax.swing.JFrame {
     }
 
     public void datosTabla(usuario usu) throws SQLException {
-        DefaultTableModel modelo = new DefaultTableModel(){
+        DefaultTableModel modelo = new DefaultTableModel() {
             //para definir si la celda es editable o no
             @Override
             public boolean isCellEditable(int row, int column) {
-				return false;
-			}
+                return false;
+            }
         };
-        modelo.addColumn("Nombre");
+        modelo.addColumn("Nick");
         modelo.addColumn("Edad");
         modelo.addColumn("Descripcion");
         tabladatos.setModel(modelo);
         String query;
         String datos[] = new String[3];
-        String nick =usu.getNick();
-        if (usu.getOrSex() == "homosexual" &&  usu.getGenero()=="masculino") {
-            query = "SELECT nick, TIMESTAMPDIFF(YEAR,fechaNac,CURDATE()) AS edad, descripcion FROM usuarios where orSex = 'homosexual' AND genero = 'masculino' and nick not in(SELECT nick FROM usuarios where nick = '"+usu.getNick()+"');";
-            rellenarTabla(datos,query, modelo);
-        } else if (usu.getOrSex() == "homosexual" &&  usu.getGenero()=="femenino") {
-            query = "SELECT nick, TIMESTAMPDIFF(YEAR,fechaNac,CURDATE()) AS edad, descripcion FROM usuarios where orSex = 'homosexual' AND genero = 'femenino' and nick not in(SELECT nick FROM usuarios where nick = '"+nick+"');";
-            rellenarTabla(datos,query, modelo);
-        } else if (usu.getOrSex() == "heterosexual" &&  usu.getGenero()=="femenino") {
-            query = "SELECT nick, TIMESTAMPDIFF(YEAR,fechaNac,CURDATE()) AS edad, descripcion FROM usuarios where orSex = 'heterosexual' AND genero = 'masculino' and nick not in(SELECT nick FROM usuarios where nick = '"+nick+"');";
-            rellenarTabla(datos,query, modelo);   
-        } else if (usu.getOrSex() == "heterosexual" &&  usu.getGenero()=="masculino") {
-            query = "SELECT nick, TIMESTAMPDIFF(YEAR,fechaNac,CURDATE()) AS edad, descripcion FROM usuarios where orSex = 'heterosexual' AND genero = 'femenino' and nick not in(SELECT nick FROM usuarios where nick = '" + nick + "');";
+        String nick = usu.getNick();
+        if (usu.getOrSex().equals("homosexual") && usu.getGenero().equals("masculino")) {
+            query = "SELECT nick, TIMESTAMPDIFF(YEAR,fechaNac,CURDATE()) AS edad, descripcion FROM usuarios where (orSex = 'bisexual' AND genero = 'masculino' or orSex = 'homosexual' AND genero = 'masculino') and nick != '" + nick + "';";
             rellenarTabla(datos, query, modelo);
-        } else if (usu.getOrSex() == "homosexual" &&  usu.getGenero()=="masculino") {
-            query = "SELECT nick, TIMESTAMPDIFF(YEAR,fechaNac,CURDATE()) AS edad, descripcion FROM usuarios where orSex = 'heterosexual' AND genero = 'femenino' and nick not in(SELECT nick FROM usuarios where nick = '"+nick+"');";
-            rellenarTabla(datos,query, modelo);
-        } else {
-            query = "SELECT nick, TIMESTAMPDIFF(YEAR,fechaNac,CURDATE()) AS edad, descripcion FROM usuarios where orSex = 'bisexual' and nick not in(SELECT nick FROM usuarios where nick = '"+nick+"');";
+        } else if (usu.getOrSex().equals("homosexual") && usu.getGenero().equals("femenino")) {
+            query = "SELECT nick, TIMESTAMPDIFF(YEAR,fechaNac,CURDATE()) AS edad, descripcion FROM usuarios where (orSex = 'bisexual' AND genero = 'femenino' or orSex = 'homosexual' AND genero = 'femenino') and nick != '" + nick + "';";
+            rellenarTabla(datos, query, modelo);
+        } else if (usu.getOrSex().equals("heterosexual") && usu.getGenero().equals("femenino")) {
+            query = "SELECT nick, TIMESTAMPDIFF(YEAR,fechaNac,CURDATE()) AS edad, descripcion FROM usuarios where (orSex = 'bisexual' AND genero = 'masculino' or orSex = 'heterosexual' AND genero = 'masculino') and nick != '" + nick + "';";
+            rellenarTabla(datos, query, modelo);
+        } else if (usu.getOrSex().equals("heterosexual") && usu.getGenero().equals("masculino")) {
+            query = "SELECT nick, TIMESTAMPDIFF(YEAR,fechaNac,CURDATE()) AS edad, descripcion FROM usuarios where (orSex = 'heterosexual' AND genero = 'femenino' or orSex = 'bisexual' AND genero = 'femenino') and nick != '" + nick + "';";
+            rellenarTabla(datos, query, modelo);
+        } else if (usu.getOrSex().equals("bisexual") && usu.getGenero().equals("masculino")) {
+            query = "SELECT nick, TIMESTAMPDIFF(YEAR,fechaNac,CURDATE()) AS edad, descripcion FROM usuarios where (orSex = 'heterosexual' AND genero = 'femenino' or orSex = 'homosexual' AND genero = 'masculino' or orSex = 'bisexual' AND genero = 'femenino' or orSex = 'bisexual' AND genero = 'masculino') and nick != '" + nick + "';";
+            rellenarTabla(datos, query, modelo);
+        } else if (usu.getOrSex().equals("bisexual") && usu.getGenero().equals("femenino")) {
+            query = "SELECT nick, TIMESTAMPDIFF(YEAR,fechaNac,CURDATE()) AS edad, descripcion FROM usuarios where (orSex = 'heterosexual' AND genero = 'masculino' or orSex = 'homosexual' AND genero = 'femenino' or orSex = 'bisexual' AND genero = 'femenino' or orSex = 'bisexual' AND genero = 'masculino') and nick != '" + nick + "';";
             rellenarTabla(datos, query, modelo);
         }
-
     }
 
     public static void main(String args[]) {
