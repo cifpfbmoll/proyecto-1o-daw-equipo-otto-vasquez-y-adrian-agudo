@@ -53,14 +53,17 @@ public class elegirChat extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         printChatsField = new javax.swing.JTextArea();
         atrasBut = new javax.swing.JToggleButton();
+        fondo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         introChatField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 introChatFieldActionPerformed(evt);
             }
         });
+        getContentPane().add(introChatField, new org.netbeans.lib.awtextra.AbsoluteConstraints(138, 488, 401, 35));
 
         irBut.setText("Ir");
         irBut.addActionListener(new java.awt.event.ActionListener() {
@@ -68,10 +71,13 @@ public class elegirChat extends javax.swing.JFrame {
                 irButActionPerformed(evt);
             }
         });
+        getContentPane().add(irBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(557, 488, 92, 35));
 
         printChatsField.setColumns(20);
         printChatsField.setRows(5);
         jScrollPane2.setViewportView(printChatsField);
+
+        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(28, 19, 615, 451));
 
         atrasBut.setText("Atrás");
         atrasBut.addActionListener(new java.awt.event.ActionListener() {
@@ -79,35 +85,10 @@ public class elegirChat extends javax.swing.JFrame {
                 atrasButActionPerformed(evt);
             }
         });
+        getContentPane().add(atrasBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(28, 488, 92, 35));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 615, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(atrasBut, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(introChatField, javax.swing.GroupLayout.PREFERRED_SIZE, 401, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(irBut, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(28, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 451, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(introChatField, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(irBut, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(atrasBut, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(64, 64, 64))
-        );
+        fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/logingris.jpg"))); // NOI18N
+        getContentPane().add(fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 680, 590));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -203,6 +184,7 @@ public class elegirChat extends javax.swing.JFrame {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton atrasBut;
+    private javax.swing.JLabel fondo;
     private javax.swing.JTextField introChatField;
     private javax.swing.JToggleButton irBut;
     private javax.swing.JScrollPane jScrollPane2;

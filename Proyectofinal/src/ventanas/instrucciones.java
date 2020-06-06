@@ -47,8 +47,10 @@ public class instrucciones extends javax.swing.JFrame {
         salirBut = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         areaText = new javax.swing.JTextArea();
+        fondo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         salirBut.setText("Salir");
         salirBut.addActionListener(new java.awt.event.ActionListener() {
@@ -56,37 +58,16 @@ public class instrucciones extends javax.swing.JFrame {
                 salirButActionPerformed(evt);
             }
         });
+        getContentPane().add(salirBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(279, 453, -1, -1));
 
         areaText.setColumns(20);
         areaText.setRows(5);
         jScrollPane1.setViewportView(areaText);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(276, Short.MAX_VALUE)
-                .addComponent(salirBut)
-                .addGap(274, 274, 274))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                    .addContainerGap(25, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 552, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(29, Short.MAX_VALUE)))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(444, Short.MAX_VALUE)
-                .addComponent(salirBut)
-                .addGap(30, 30, 30))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                    .addContainerGap(31, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 397, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(78, Short.MAX_VALUE)))
-        );
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 31, 552, 397));
+
+        fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/fondo instrucciones.jpg"))); // NOI18N
+        getContentPane().add(fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 610, 510));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -151,6 +132,7 @@ public class instrucciones extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea areaText;
+    private javax.swing.JLabel fondo;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton salirBut;
     // End of variables declaration//GEN-END:variables
