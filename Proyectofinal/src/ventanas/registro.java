@@ -418,7 +418,7 @@ public class registro extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivos JPG, PNG & GIF","jpg","png","gif"); //filtro archivos
+        FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivos PNG","png"); //filtro archivos
         JFileChooser archivo = new JFileChooser();
         archivo.setFileFilter(filtro);
         archivo.addChoosableFileFilter(filtro);
