@@ -12,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,6 +28,8 @@ import proyectofinal.conectarBBDD;
 public class Lista extends javax.swing.JFrame {
 
     private usuario usu1;
+    private ArrayList<String> nicks=new ArrayList<String>();
+
 
     public usuario getUsu1() {
         return usu1;
@@ -119,7 +122,7 @@ public class Lista extends javax.swing.JFrame {
     }//GEN-LAST:event_introNickFieldActionPerformed
 
     private void irButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_irButActionPerformed
-        try {
+        /*try {
             boolean found = false;
             Statement st = con.getConnection().createStatement();
             ResultSet rs = st.executeQuery("select id, nick from usuarios where nick = '" + introNickField.getText() + "'");
@@ -160,6 +163,53 @@ public class Lista extends javax.swing.JFrame {
             }
         } catch (SQLException ex) {
             Logger.getLogger(elegirChat.class.getName()).log(Level.SEVERE, null, ex);
+        }*/
+         try {
+            int i=0;
+            boolean found=false;
+            while(i<nicks.size()&&!found){
+                System.out.println(nicks.size()+" i:"+i+" nick:"+nicks.get(i));
+                if (nicks.get(i).contentEquals(introNickField.getText())) {
+                    Statement st = con.getConnection().createStatement();
+                    ResultSet rs = st.executeQuery("select id, nick from usuarios where nick = '" + introNickField.getText() + "'");
+                    rs.next();
+                    found = true;
+                    Statement st2 = con.getConnection().createStatement();
+                    ResultSet comprExist = st2.executeQuery("select id from matchh where id_usuario0 = '" + usu1.getId() + "' and id_usuario1='" + rs.getInt("id") + "'");
+                    if (comprExist.next()) {
+                        Statement st3 = con.getConnection().createStatement();
+                        ResultSet maxId = st3.executeQuery("select coalesce(max(id), -1) as maxId from mensajes");
+                        maxId.next();
+                        PreparedStatement insert = con.getConnection().prepareStatement("insert into mensajes (id,mensaje,id_usuario0,id_usuario1,url) values (?,?,?,?,?)");
+                        insert.setInt(1, maxId.getInt("maxId") + 1);
+                        insert.setString(2, "");
+                        insert.setInt(3, usu1.getId());
+                        insert.setInt(4, rs.getInt("id"));
+                        insert.setString(5, null);
+                        insert.executeUpdate();
+                        insert.close();
+                        JOptionPane.showMessageDialog(null, "MATCH");
+                    } else {
+                        Statement max = con.getConnection().createStatement();
+                        ResultSet maxId = max.executeQuery("select coalesce(max(id), -1) as maxId from matchh");
+                        maxId.next();
+                        PreparedStatement insert2 = con.getConnection().prepareStatement("insert into matchh (id,id_usuario0,id_usuario1) values (?,?,?)");
+                        insert2.setInt(1, maxId.getInt("maxId") + 1);
+                        insert2.setInt(2, rs.getInt("id"));
+                        insert2.setInt(3, usu1.getId());
+                        insert2.executeUpdate();
+                        insert2.close();
+                        JOptionPane.showMessageDialog(null, "LIKE");
+                    }
+                } else {
+                   if(i==(nicks.size()-1)){
+                      JOptionPane.showMessageDialog(null, "No se encuentra el usuario");
+                   }
+                }
+                i++;
+            }
+        } catch (SQLException ex) {
+                    Logger.getLogger(elegirChat.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_irButActionPerformed
 
@@ -186,7 +236,7 @@ public class Lista extends javax.swing.JFrame {
                     datos[0] = rs.getString("nick");
                     datos[1] = rs.getString("edad");
                     datos[2] = rs.getString("descripcion");
-
+                    nicks.add(rs.getString("nick"));
                     modelo.addRow(datos);
                 }
                 tabladatos.setModel(modelo);
