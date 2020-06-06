@@ -75,13 +75,14 @@ public class Lista extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        foto = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabladatos = new javax.swing.JTable();
+        introNickField = new javax.swing.JTextField();
+        atrasBut = new javax.swing.JButton();
+        irBut = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        getContentPane().add(foto, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 360, 200, 200));
 
         tabladatos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -96,27 +97,50 @@ public class Lista extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tabladatos);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, 620, 340));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, 680, 340));
+
+        introNickField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                introNickFieldActionPerformed(evt);
+            }
+        });
+        getContentPane().add(introNickField, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 390, 510, 40));
+
+        atrasBut.setText("Atrás");
+        atrasBut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                atrasButActionPerformed(evt);
+            }
+        });
+        getContentPane().add(atrasBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 390, -1, 40));
+
+        irBut.setText("Ir");
+        irBut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                irButActionPerformed(evt);
+            }
+        });
+        getContentPane().add(irBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 390, 60, 40));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
 
-    private void introChatFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_introChatFieldActionPerformed
+    private void introNickFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_introNickFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_introChatFieldActionPerformed
+    }//GEN-LAST:event_introNickFieldActionPerformed
 
     private void irButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_irButActionPerformed
         try {
             boolean found = false;
             Statement st = con.getConnection().createStatement();
-            ResultSet rs = st.executeQuery("select id, nick from usuarios where nick = '" + introChatField.getText() + "'");
+            ResultSet rs = st.executeQuery("select id, nick from usuarios where nick = '" + introNickField.getText() + "'");
             while (rs.next()) {
-                if(introChatField.getText().equals(rs.getString("nick"))){
+                if (introNickField.getText().equals(rs.getString("nick"))) {
                     found = true;
                     Statement st2 = con.getConnection().createStatement();
-                    ResultSet comprExist = st2.executeQuery("select id from match where id_usuario0 = '" + usu1.getId() + "' and id_usuario1='" + rs.getInt("id") + "'");
-                    if(comprExist.next()){
+                    ResultSet comprExist = st2.executeQuery("select id from matchh where id_usuario0 = '" + usu1.getId() + "' and id_usuario1='" + rs.getInt("id") + "'");
+                    if (comprExist.next()) {
                         Statement st3 = con.getConnection().createStatement();
                         ResultSet maxId = st3.executeQuery("select coalesce(max(id), -1) as maxId from mensajes");
                         maxId.next();
@@ -124,30 +148,38 @@ public class Lista extends javax.swing.JFrame {
                         insert.setInt(1, maxId.getInt("maxId") + 1);
                         insert.setString(2, "");
                         insert.setInt(3, usu1.getId());
-                        insert.setInt(4,rs.getInt("id"));
+                        insert.setInt(4, rs.getInt("id"));
                         insert.setString(5, null);
                         insert.executeUpdate();
                         insert.close();
                         JOptionPane.showMessageDialog(null, "MATCH");
-                    }else{
+                    } else {
                         Statement max = con.getConnection().createStatement();
                         ResultSet maxId = max.executeQuery("select coalesce(max(id), -1) as maxId from mensajes");
                         maxId.next();
-                        PreparedStatement insert = con.getConnection().prepareStatement("insert into match (id,id_usuario0,id_usuario1) values (?,?,?)");
-                        insert.setInt(1, maxId.getInt("maxId") + 1);
-                        insert.setInt(2, rs.getInt("id"));
-                        insert.setInt(3, usu1.getId());
+                        PreparedStatement insert2 = con.getConnection().prepareStatement("insert into matchh (id,id_usuario0,id_usuario1) values (?,?,?)");
+                        insert2.setInt(1, maxId.getInt("maxId") + 1);
+                        insert2.setInt(2, rs.getInt("id"));
+                        insert2.setInt(3, usu1.getId());
+                        insert2.executeUpdate();
+                        insert2.close();
                         JOptionPane.showMessageDialog(null, "LIKE");
                     }
                 }
             }
-            if(!found){
+            if (!found) {
                 JOptionPane.showMessageDialog(null, "No se encuentra el usuario");
             }
         } catch (SQLException ex) {
             Logger.getLogger(elegirChat.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_irButActionPerformed
+
+    private void atrasButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atrasButActionPerformed
+        menuPrincipal menu=new menuPrincipal();
+        menu.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_atrasButActionPerformed
 
 
     /**
@@ -163,8 +195,6 @@ public class Lista extends javax.swing.JFrame {
         byte[] img = rs.getBytes("imgperfil");
         Image imagen = getImage(img, false);
         imagen = imagen.getScaledInstance(200, 200, Image.SCALE_DEFAULT);
-        foto.setIcon(new ImageIcon(imagen));
-
     }
 
     private Image getImage(byte[] bytes, boolean isThumbnail) throws IOException {
@@ -182,7 +212,6 @@ public class Lista extends javax.swing.JFrame {
 
         }
         return reader.read(0, param);
-
     }
     
     public void rellenarTabla(String[] datos, String query, DefaultTableModel modelo){
@@ -192,9 +221,9 @@ public class Lista extends javax.swing.JFrame {
                 
 
                 while (rs.next()) {
-                    datos[0] = rs.getString(1);
-                    datos[1] = rs.getString(2);
-                    datos[2] = rs.getString(3);
+                    datos[0] = rs.getString("nick");
+                    datos[1] = rs.getString("edad");
+                    datos[2] = rs.getString("descripcion");
 
                     modelo.addRow(datos);
                 }
@@ -219,7 +248,7 @@ public class Lista extends javax.swing.JFrame {
         String datos[] = new String[3];
         String nick =usu.getNick();
         if (usu.getOrSex() == "homosexual" &&  usu.getGenero()=="masculino") {
-            query = "SELECT nick, TIMESTAMPDIFF(YEAR,fechaNac,CURDATE()) AS edad, descripcion FROM usuarios where orSex = 'homosexual' AND genero = 'masculino' and nick not in(SELECT nick FROM usuarios where nick = '"+nick+"');";
+            query = "SELECT nick, TIMESTAMPDIFF(YEAR,fechaNac,CURDATE()) AS edad, descripcion FROM usuarios where orSex = 'homosexual' AND genero = 'masculino' and nick not in(SELECT nick FROM usuarios where nick = '"+usu.getNick()+"');";
             rellenarTabla(datos,query, modelo);
         } else if (usu.getOrSex() == "homosexual" &&  usu.getGenero()=="femenino") {
             query = "SELECT nick, TIMESTAMPDIFF(YEAR,fechaNac,CURDATE()) AS edad, descripcion FROM usuarios where orSex = 'homosexual' AND genero = 'femenino' and nick not in(SELECT nick FROM usuarios where nick = '"+nick+"');";
@@ -228,7 +257,8 @@ public class Lista extends javax.swing.JFrame {
             query = "SELECT nick, TIMESTAMPDIFF(YEAR,fechaNac,CURDATE()) AS edad, descripcion FROM usuarios where orSex = 'heterosexual' AND genero = 'masculino' and nick not in(SELECT nick FROM usuarios where nick = '"+nick+"');";
             rellenarTabla(datos,query, modelo);   
         } else if (usu.getOrSex() == "heterosexual" &&  usu.getGenero()=="masculino") {
-            
+            query = "SELECT nick, TIMESTAMPDIFF(YEAR,fechaNac,CURDATE()) AS edad, descripcion FROM usuarios where orSex = 'heterosexual' AND genero = 'femenino' and nick not in(SELECT nick FROM usuarios where nick = '" + nick + "');";
+            rellenarTabla(datos, query, modelo);
         } else if (usu.getOrSex() == "homosexual" &&  usu.getGenero()=="masculino") {
             query = "SELECT nick, TIMESTAMPDIFF(YEAR,fechaNac,CURDATE()) AS edad, descripcion FROM usuarios where orSex = 'heterosexual' AND genero = 'femenino' and nick not in(SELECT nick FROM usuarios where nick = '"+nick+"');";
             rellenarTabla(datos,query, modelo);
@@ -273,7 +303,9 @@ public class Lista extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel foto;
+    private javax.swing.JButton atrasBut;
+    private javax.swing.JTextField introNickField;
+    private javax.swing.JButton irBut;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tabladatos;
     // End of variables declaration//GEN-END:variables

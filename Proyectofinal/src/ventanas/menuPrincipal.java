@@ -159,16 +159,11 @@ public class menuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_matchButActionPerformed
 
     private void listaButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listaButActionPerformed
-        try {
+
             Lista lista = new Lista(usu);
             lista.setVisible(true);
             lista.pack();
             this.dispose();
-        } catch (SQLException ex) {
-            Logger.getLogger(menuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(menuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }//GEN-LAST:event_listaButActionPerformed
 
     /**
