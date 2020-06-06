@@ -10,15 +10,19 @@ import java.awt.Image;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReadParam;
 import javax.imageio.ImageReader;
 import javax.imageio.stream.ImageInputStream;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import proyectofinal.conectarBBDD;
 
@@ -28,14 +32,14 @@ import proyectofinal.conectarBBDD;
  */
 public class Lista extends javax.swing.JFrame {
 
-    private usuario usu;
+    private usuario usu1;
 
-    public usuario getUsu() {
-        return usu;
+    public usuario getUsu1() {
+        return usu1;
     }
 
     public void setUsu(usuario usu) {
-        this.usu = usu;
+        this.usu1 = usu;
     }
 
     /**
@@ -45,11 +49,20 @@ public class Lista extends javax.swing.JFrame {
         initComponents();
     }
 
-    public Lista(usuario usu) throws SQLException, IOException {
-        this.usu = usu;
-        initComponents();
-        datosTabla(usu);
-        llamarImagen(usu);
+
+    public Lista(usuario usu) {
+        try {
+            this.usu1 = usu;
+            initComponents();
+            datosTabla(usu);
+            llamarImagen(usu);
+        } catch (SQLException ex) {
+            Logger.getLogger(Lista.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Lista.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
 
     }
 
@@ -87,6 +100,55 @@ public class Lista extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+
+    private void introChatFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_introChatFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_introChatFieldActionPerformed
+
+    private void irButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_irButActionPerformed
+        try {
+            boolean found = false;
+            Statement st = con.getConnection().createStatement();
+            ResultSet rs = st.executeQuery("select id, nick from usuarios where nick = '" + introChatField.getText() + "'");
+            while (rs.next()) {
+                if(introChatField.getText().equals(rs.getString("nick"))){
+                    found = true;
+                    Statement st2 = con.getConnection().createStatement();
+                    ResultSet comprExist = st2.executeQuery("select id from match where id_usuario0 = '" + usu1.getId() + "' and id_usuario1='" + rs.getInt("id") + "'");
+                    if(comprExist.next()){
+                        Statement st3 = con.getConnection().createStatement();
+                        ResultSet maxId = st3.executeQuery("select coalesce(max(id), -1) as maxId from mensajes");
+                        maxId.next();
+                        PreparedStatement insert = con.getConnection().prepareStatement("insert into mensajes (id,mensaje,id_usuario0,id_usuario1,url) values (?,?,?,?,?)");
+                        insert.setInt(1, maxId.getInt("maxId") + 1);
+                        insert.setString(2, "");
+                        insert.setInt(3, usu1.getId());
+                        insert.setInt(4,rs.getInt("id"));
+                        insert.setString(5, null);
+                        insert.executeUpdate();
+                        insert.close();
+                        JOptionPane.showMessageDialog(null, "MATCH");
+                    }else{
+                        Statement max = con.getConnection().createStatement();
+                        ResultSet maxId = max.executeQuery("select coalesce(max(id), -1) as maxId from mensajes");
+                        maxId.next();
+                        PreparedStatement insert = con.getConnection().prepareStatement("insert into match (id,id_usuario0,id_usuario1) values (?,?,?)");
+                        insert.setInt(1, maxId.getInt("maxId") + 1);
+                        insert.setInt(2, rs.getInt("id"));
+                        insert.setInt(3, usu1.getId());
+                        JOptionPane.showMessageDialog(null, "LIKE");
+                    }
+                }
+            }
+            if(!found){
+                JOptionPane.showMessageDialog(null, "No se encuentra el usuario");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(elegirChat.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_irButActionPerformed
+
 
     /**
      * @param args the command line arguments
@@ -164,8 +226,10 @@ public class Lista extends javax.swing.JFrame {
             rellenarTabla(datos,query, modelo);
         } else if (usu.getOrSex() == "heterosexual" &&  usu.getGenero()=="femenino") {
             query = "SELECT nick, TIMESTAMPDIFF(YEAR,fechaNac,CURDATE()) AS edad, descripcion FROM usuarios where orSex = 'heterosexual' AND genero = 'masculino' and nick not in(SELECT nick FROM usuarios where nick = '"+nick+"');";
-            rellenarTabla(datos,query, modelo);
+            rellenarTabla(datos,query, modelo);   
         } else if (usu.getOrSex() == "heterosexual" &&  usu.getGenero()=="masculino") {
+            
+        } else if (usu.getOrSex() == "homosexual" &&  usu.getGenero()=="masculino") {
             query = "SELECT nick, TIMESTAMPDIFF(YEAR,fechaNac,CURDATE()) AS edad, descripcion FROM usuarios where orSex = 'heterosexual' AND genero = 'femenino' and nick not in(SELECT nick FROM usuarios where nick = '"+nick+"');";
             rellenarTabla(datos,query, modelo);
         } else {
