@@ -49,7 +49,7 @@ public class Lista extends javax.swing.JFrame {
         this.usu = usu;
         initComponents();
         datosTabla(usu);
-        llamarImagen(usu);
+        
 
     }
 
@@ -62,13 +62,14 @@ public class Lista extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        foto = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabladatos = new javax.swing.JTable();
+        irBut = new javax.swing.JButton();
+        atrasBut = new javax.swing.JButton();
+        introChat = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        getContentPane().add(foto, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 360, 200, 200));
 
         tabladatos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -83,10 +84,45 @@ public class Lista extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tabladatos);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, 620, 340));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, 680, 340));
+
+        irBut.setText("Ir");
+        irBut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                irButActionPerformed(evt);
+            }
+        });
+        getContentPane().add(irBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 390, 60, 40));
+
+        atrasBut.setText("Atrás");
+        atrasBut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                atrasButActionPerformed(evt);
+            }
+        });
+        getContentPane().add(atrasBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 390, -1, 40));
+
+        introChat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                introChatActionPerformed(evt);
+            }
+        });
+        getContentPane().add(introChat, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 390, 510, 40));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void irButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_irButActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_irButActionPerformed
+
+    private void atrasButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atrasButActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_atrasButActionPerformed
+
+    private void introChatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_introChatActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_introChatActionPerformed
 
     /**
      * @param args the command line arguments
@@ -94,34 +130,7 @@ public class Lista extends javax.swing.JFrame {
     conectarBBDD con = new conectarBBDD();
     Connection cn = con.getConnection();
 
-    public void llamarImagen(usuario usu) throws SQLException, IOException {
-        Statement st = cn.createStatement();
-        ResultSet rs = st.executeQuery("SELECT imgperfil FROM usuarios where id=2;");
-        rs.next();
-        byte[] img = rs.getBytes("imgperfil");
-        Image imagen = getImage(img, false);
-        imagen = imagen.getScaledInstance(200, 200, Image.SCALE_DEFAULT);
-        foto.setIcon(new ImageIcon(imagen));
-
-    }
-
-    private Image getImage(byte[] bytes, boolean isThumbnail) throws IOException {
-
-        ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
-        Iterator readers = ImageIO.getImageReadersByFormatName("png");
-        ImageReader reader = (ImageReader) readers.next();
-        Object source = bis; // File or InputStream
-        ImageInputStream iis = ImageIO.createImageInputStream(source);
-        reader.setInput(iis, true);
-        ImageReadParam param = reader.getDefaultReadParam();
-        if (isThumbnail) {
-
-            param.setSourceSubsampling(4, 4, 0, 0);
-
-        }
-        return reader.read(0, param);
-
-    }
+    
     
     public void rellenarTabla(String[] datos, String query, DefaultTableModel modelo){
         try {
@@ -209,7 +218,9 @@ public class Lista extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel foto;
+    private javax.swing.JButton atrasBut;
+    private javax.swing.JTextField introChat;
+    private javax.swing.JButton irBut;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tabladatos;
     // End of variables declaration//GEN-END:variables
