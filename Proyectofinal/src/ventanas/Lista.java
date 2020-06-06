@@ -6,16 +6,12 @@
 package ventanas;
 
 import proyectofinal.usuario;
-import java.awt.Image;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
-import java.util.ArrayList;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,7 +27,6 @@ import proyectofinal.conectarBBDD;
 public class Lista extends javax.swing.JFrame {
 
     private usuario usu1;
-    private ArrayList<String> nicks=new ArrayList<String>();
 
     public usuario getUsu1() {
         return usu1;
@@ -50,7 +45,6 @@ public class Lista extends javax.swing.JFrame {
 
 
     public Lista(usuario usu) {
-        
         try {
             this.usu1 = usu;
             initComponents();
@@ -131,37 +125,36 @@ public class Lista extends javax.swing.JFrame {
             ResultSet rs = st.executeQuery("select id, nick from usuarios where nick = '" + introNickField.getText() + "'");
             while (rs.next()) {
                 if (introNickField.getText().equals(rs.getString("nick"))) {
-                    int i=0;
-                            found = true;
-                            Statement st2 = con.getConnection().createStatement();
-                            ResultSet comprExist = st2.executeQuery("select id from matchh where id_usuario0 = '" + usu1.getId() + "' and id_usuario1='" + rs.getInt("id") + "'");
-                            if (comprExist.next()) {
-                                Statement st3 = con.getConnection().createStatement();
-                                ResultSet maxId = st3.executeQuery("select coalesce(max(id), -1) as maxId from mensajes");
-                                maxId.next();
-                                PreparedStatement insert = con.getConnection().prepareStatement("insert into mensajes (id,mensaje,id_usuario0,id_usuario1,url) values (?,?,?,?,?)");
-                                insert.setInt(1, maxId.getInt("maxId") + 1);
-                                insert.setString(2, "");
-                                insert.setInt(3, usu1.getId());
-                                insert.setInt(4, rs.getInt("id"));
-                                insert.setString(5, null);
-                                insert.executeUpdate();
-                                insert.close();
-                                JOptionPane.showMessageDialog(null, "MATCH");
-                            } else {
-                                Statement max = con.getConnection().createStatement();
-                                ResultSet maxId = max.executeQuery("select coalesce(max(id), -1) as maxId from mensajes");
-                                maxId.next();
-                                PreparedStatement insert2 = con.getConnection().prepareStatement("insert into matchh (id,id_usuario0,id_usuario1) values (?,?,?)");
-                                insert2.setInt(1, maxId.getInt("maxId") + 1);
-                                insert2.setInt(2, rs.getInt("id"));
-                                insert2.setInt(3, usu1.getId());
-                                insert2.executeUpdate();
-                                insert2.close();
-                                JOptionPane.showMessageDialog(null, "LIKE");
+                    found = true;
+                    Statement st2 = con.getConnection().createStatement();
+                    ResultSet comprExist = st2.executeQuery("select id from matchh where id_usuario0 = '" + usu1.getId() + "' and id_usuario1='" + rs.getInt("id") + "'");
+                    if (comprExist.next()) {
+                        Statement st3 = con.getConnection().createStatement();
+                        ResultSet maxId = st3.executeQuery("select coalesce(max(id), -1) as maxId from mensajes");
+                        maxId.next();
+                        PreparedStatement insert = con.getConnection().prepareStatement("insert into mensajes (id,mensaje,id_usuario0,id_usuario1,url) values (?,?,?,?,?)");
+                        insert.setInt(1, maxId.getInt("maxId") + 1);
+                        insert.setString(2, "");
+                        insert.setInt(3, usu1.getId());
+                        insert.setInt(4, rs.getInt("id"));
+                        insert.setString(5, null);
+                        insert.executeUpdate();
+                        insert.close();
+                        JOptionPane.showMessageDialog(null, "MATCH");
+                    } else {
+                        Statement max = con.getConnection().createStatement();
+                        ResultSet maxId = max.executeQuery("select coalesce(max(id), -1) as maxId from mensajes");
+                        maxId.next();
+                        PreparedStatement insert2 = con.getConnection().prepareStatement("insert into matchh (id,id_usuario0,id_usuario1) values (?,?,?)");
+                        insert2.setInt(1, maxId.getInt("maxId") + 1);
+                        insert2.setInt(2, rs.getInt("id"));
+                        insert2.setInt(3, usu1.getId());
+                        insert2.executeUpdate();
+                        insert2.close();
+                        JOptionPane.showMessageDialog(null, "LIKE");
                     }
                 }
-            }   
+            }
             if (!found) {
                 JOptionPane.showMessageDialog(null, "No se encuentra el usuario");
             }
@@ -171,7 +164,7 @@ public class Lista extends javax.swing.JFrame {
     }//GEN-LAST:event_irButActionPerformed
 
     private void atrasButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atrasButActionPerformed
-        menuPrincipal menu=new menuPrincipal();
+        menuPrincipal menu=new menuPrincipal(usu1);
         menu.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_atrasButActionPerformed
@@ -193,7 +186,7 @@ public class Lista extends javax.swing.JFrame {
                     datos[0] = rs.getString("nick");
                     datos[1] = rs.getString("edad");
                     datos[2] = rs.getString("descripcion");
-                    nicks.add(rs.getString("nick"));
+
                     modelo.addRow(datos);
                 }
                 tabladatos.setModel(modelo);
@@ -202,40 +195,39 @@ public class Lista extends javax.swing.JFrame {
     }
 
     public void datosTabla(usuario usu) throws SQLException {
-        DefaultTableModel modelo = new DefaultTableModel(){
+        DefaultTableModel modelo = new DefaultTableModel() {
             //para definir si la celda es editable o no
             @Override
             public boolean isCellEditable(int row, int column) {
-				return false;
-			}
+                return false;
+            }
         };
-        modelo.addColumn("Nombre");
+        modelo.addColumn("Nick");
         modelo.addColumn("Edad");
         modelo.addColumn("Descripcion");
         tabladatos.setModel(modelo);
         String query;
         String datos[] = new String[3];
-        String nick =usu.getNick();
-        if (usu.getOrSex() == "homosexual" &&  usu.getGenero()=="masculino") {
-            query = "SELECT nick, TIMESTAMPDIFF(YEAR,fechaNac,CURDATE()) AS edad, descripcion FROM usuarios where orSex = 'homosexual' AND genero = 'masculino' and nick not in(SELECT nick FROM usuarios where nick = '"+usu.getNick()+"');";
-            rellenarTabla(datos,query, modelo);
-        } else if (usu.getOrSex() == "homosexual" &&  usu.getGenero()=="femenino") {
-            query = "SELECT nick, TIMESTAMPDIFF(YEAR,fechaNac,CURDATE()) AS edad, descripcion FROM usuarios where orSex = 'homosexual' AND genero = 'femenino' and nick not in(SELECT nick FROM usuarios where nick = '"+nick+"');";
-            rellenarTabla(datos,query, modelo);
-        } else if (usu.getOrSex() == "heterosexual" &&  usu.getGenero()=="femenino") {
-            query = "SELECT nick, TIMESTAMPDIFF(YEAR,fechaNac,CURDATE()) AS edad, descripcion FROM usuarios where orSex = 'heterosexual' AND genero = 'masculino' and nick not in(SELECT nick FROM usuarios where nick = '"+nick+"');";
-            rellenarTabla(datos,query, modelo);   
-        } else if (usu.getOrSex() == "heterosexual" &&  usu.getGenero()=="masculino") {
-            query = "SELECT nick, TIMESTAMPDIFF(YEAR,fechaNac,CURDATE()) AS edad, descripcion FROM usuarios where orSex = 'heterosexual' AND genero = 'femenino' and nick not in(SELECT nick FROM usuarios where nick = '" + nick + "');";
+        String nick = usu.getNick();
+        if (usu.getOrSex().equals("homosexual") && usu.getGenero().equals("masculino")) {
+            query = "SELECT nick, TIMESTAMPDIFF(YEAR,fechaNac,CURDATE()) AS edad, descripcion FROM usuarios where (orSex = 'bisexual' AND genero = 'masculino' or orSex = 'homosexual' AND genero = 'masculino') and nick != '" + nick + "';";
             rellenarTabla(datos, query, modelo);
-        } else if (usu.getOrSex() == "homosexual" &&  usu.getGenero()=="masculino") {
-            query = "SELECT nick, TIMESTAMPDIFF(YEAR,fechaNac,CURDATE()) AS edad, descripcion FROM usuarios where orSex = 'heterosexual' AND genero = 'femenino' and nick not in(SELECT nick FROM usuarios where nick = '"+nick+"');";
-            rellenarTabla(datos,query, modelo);
-        } else {
-            query = "SELECT nick, TIMESTAMPDIFF(YEAR,fechaNac,CURDATE()) AS edad, descripcion FROM usuarios where orSex = 'bisexual' and nick not in(SELECT nick FROM usuarios where nick = '"+nick+"');";
+        } else if (usu.getOrSex().equals("homosexual") && usu.getGenero().equals("femenino")) {
+            query = "SELECT nick, TIMESTAMPDIFF(YEAR,fechaNac,CURDATE()) AS edad, descripcion FROM usuarios where (orSex = 'bisexual' AND genero = 'femenino' or orSex = 'homosexual' AND genero = 'femenino') and nick != '" + nick + "';";
+            rellenarTabla(datos, query, modelo);
+        } else if (usu.getOrSex().equals("heterosexual") && usu.getGenero().equals("femenino")) {
+            query = "SELECT nick, TIMESTAMPDIFF(YEAR,fechaNac,CURDATE()) AS edad, descripcion FROM usuarios where (orSex = 'bisexual' AND genero = 'masculino' or orSex = 'heterosexual' AND genero = 'masculino') and nick != '" + nick + "';";
+            rellenarTabla(datos, query, modelo);
+        } else if (usu.getOrSex().equals("heterosexual") && usu.getGenero().equals("masculino")) {
+            query = "SELECT nick, TIMESTAMPDIFF(YEAR,fechaNac,CURDATE()) AS edad, descripcion FROM usuarios where (orSex = 'heterosexual' AND genero = 'femenino' or orSex = 'bisexual' AND genero = 'femenino') and nick != '" + nick + "';";
+            rellenarTabla(datos, query, modelo);
+        } else if (usu.getOrSex().equals("bisexual") && usu.getGenero().equals("masculino")) {
+            query = "SELECT nick, TIMESTAMPDIFF(YEAR,fechaNac,CURDATE()) AS edad, descripcion FROM usuarios where (orSex = 'heterosexual' AND genero = 'femenino' or orSex = 'homosexual' AND genero = 'masculino' or orSex = 'bisexual' AND genero = 'femenino' or orSex = 'bisexual' AND genero = 'masculino') and nick != '" + nick + "';";
+            rellenarTabla(datos, query, modelo);
+        } else if (usu.getOrSex().equals("bisexual") && usu.getGenero().equals("femenino")) {
+            query = "SELECT nick, TIMESTAMPDIFF(YEAR,fechaNac,CURDATE()) AS edad, descripcion FROM usuarios where (orSex = 'heterosexual' AND genero = 'masculino' or orSex = 'homosexual' AND genero = 'femenino' or orSex = 'bisexual' AND genero = 'femenino' or orSex = 'bisexual' AND genero = 'masculino') and nick != '" + nick + "';";
             rellenarTabla(datos, query, modelo);
         }
-
     }
 
     public static void main(String args[]) {
