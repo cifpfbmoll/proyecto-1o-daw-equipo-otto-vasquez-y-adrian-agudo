@@ -9,6 +9,7 @@ import java.awt.Image;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -46,7 +47,7 @@ public class match extends javax.swing.JFrame {
     public match(usuario usu) throws SQLException, IOException {
         this.usu = usu;
         initComponents();
-        llamarImagen(usu);
+        statementImagen(usu);
 
     }
 
@@ -58,23 +59,60 @@ public class match extends javax.swing.JFrame {
         this.usu = usu;
     }
 
-    public void llamarImagen(usuario usu) throws SQLException, IOException {
-        String nick = usu.getNick();
-        String statement = "SELECT imgperfil FROM usuarios where nick not in(SELECT nick FROM usuarios where nick = '" + nick + "');";
+    public void statementImagen(usuario usu) {
+        try {
+            String query = "";
+            String nick = usu.getNick();
+            if (usu.getOrSex().equals("homosexual") && usu.getGenero().equals("masculino")) {
+                query = "SELECT id, nick, TIMESTAMPDIFF(YEAR,fechaNac,CURDATE()) AS edad, provincia, descripcion, imgperfil FROM usuarios where (orSex = 'bisexual' AND genero = 'masculino' or orSex = 'homosexual' AND genero = 'masculino') and nick != '" + nick + "';";
+            } else if (usu.getOrSex().equals("homosexual") && usu.getGenero().equals("femenino")) {
+                query = "SELECT id, nick, TIMESTAMPDIFF(YEAR,fechaNac,CURDATE()) AS edad, provincia, descripcion, imgperfil FROM usuarios where (orSex = 'bisexual' AND genero = 'femenino' or orSex = 'homosexual' AND genero = 'femenino') and nick != '" + nick + "';";
+            } else if (usu.getOrSex().equals("heterosexual") && usu.getGenero().equals("femenino")) {
+                query = "SELECT id, nick, TIMESTAMPDIFF(YEAR,fechaNac,CURDATE()) AS edad, provincia, descripcion, imgperfil FROM usuarios where (orSex = 'bisexual' AND genero = 'masculino' or orSex = 'heterosexual' AND genero = 'masculino') and nick != '" + nick + "';";
+            } else if (usu.getOrSex().equals("heterosexual") && usu.getGenero().equals("masculino")) {
+                query = "SELECT id, nick, TIMESTAMPDIFF(YEAR,fechaNac,CURDATE()) AS edad, provincia, descripcion, imgperfil FROM usuarios where (orSex = 'heterosexual' AND genero = 'femenino' or orSex = 'bisexual' AND genero = 'femenino') and nick != '" + nick + "';";
+            } else if (usu.getOrSex().equals("bisexual") && usu.getGenero().equals("masculino")) {
+                query = "SELECT id, nick, TIMESTAMPDIFF(YEAR,fechaNac,CURDATE()) AS edad, provincia, descripcion, imgperfil FROM usuarios where (orSex = 'heterosexual' AND genero = 'femenino' or orSex = 'homosexual' AND genero = 'masculino' or orSex = 'bisexual' AND genero = 'femenino' or orSex = 'bisexual' AND genero = 'masculino') and nick != '" + nick + "';";
+            } else if (usu.getOrSex().equals("bisexual") && usu.getGenero().equals("femenino")) {
+                query = "SELECT id, nick, TIMESTAMPDIFF(YEAR,fechaNac,CURDATE()) AS edad, provincia, descripcion, imgperfil FROM usuarios where (orSex = 'heterosexual' AND genero = 'masculino' or orSex = 'homosexual' AND genero = 'femenino' or orSex = 'bisexual' AND genero = 'femenino' or orSex = 'bisexual' AND genero = 'masculino') and nick != '" + nick + "';";
+            }
+            llamarInfo(usu, query);
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error en la imagen");
+        }
+    }
+
+    public void llamarInfo(usuario usu, String query) throws SQLException, IOException {
         st = cn.createStatement();
-        rs = st.executeQuery(statement);
+        rs = st.executeQuery(query);
         rs.first();
         byte[] img = rs.getBytes("imgperfil");
         Image imagen = getImage(img, false);
         imagen = imagen.getScaledInstance(200, 200, Image.SCALE_DEFAULT);
         foto.setIcon(new ImageIcon(imagen));
+
+        st = cn.createStatement();
+        rs = st.executeQuery(query);
+        rs.first();
+        nick.setText(rs.getString("nick"));
+        edad.setText(rs.getString("edad"));
+        provincia.setText(rs.getString("provincia"));
+        descripcion.setText(rs.getString("descripcion"));
     }
 
-    public void siguienteImagen(usuario usu) throws SQLException, IOException {
+    public void siguienteInfo(usuario usu) throws SQLException, IOException {
         byte[] img = rs.getBytes("imgperfil");
         Image imagen = getImage(img, false);
         imagen = imagen.getScaledInstance(200, 200, Image.SCALE_DEFAULT);
         foto.setIcon(new ImageIcon(imagen));
+
+        nick.setText(rs.getString("nick"));
+        edad.setText(rs.getString("edad"));
+        provincia.setText(rs.getString("provincia"));
+        descripcion.setText(rs.getString("descripcion"));
     }
 
     private Image getImage(byte[] bytes, boolean isThumbnail) throws IOException {
@@ -112,8 +150,17 @@ public class match extends javax.swing.JFrame {
 
         foto = new javax.swing.JLabel();
         likeBut = new javax.swing.JButton();
+        DislikeBut = new javax.swing.JButton();
+        nick = new javax.swing.JLabel();
+        edad = new javax.swing.JLabel();
+        provincia = new javax.swing.JLabel();
+        txt = new javax.swing.JScrollPane();
+        descripcion = new javax.swing.JTextArea();
+        atrasBut = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        getContentPane().add(foto, new org.netbeans.lib.awtextra.AbsoluteConstraints(187, 41, 297, 240));
 
         likeBut.setText("Like");
         likeBut.addActionListener(new java.awt.event.ActionListener() {
@@ -121,39 +168,92 @@ public class match extends javax.swing.JFrame {
                 likeButActionPerformed(evt);
             }
         });
+        getContentPane().add(likeBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 150, -1, -1));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(88, 88, 88)
-                .addComponent(foto, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(likeBut)
-                .addContainerGap(47, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(57, 57, 57)
-                        .addComponent(foto, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(156, 156, 156)
-                        .addComponent(likeBut)))
-                .addContainerGap(82, Short.MAX_VALUE))
-        );
+        DislikeBut.setText("Dislike");
+        DislikeBut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DislikeButActionPerformed(evt);
+            }
+        });
+        getContentPane().add(DislikeBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 150, -1, -1));
+
+        nick.setText("jLabel1");
+        getContentPane().add(nick, new org.netbeans.lib.awtextra.AbsoluteConstraints(258, 315, -1, -1));
+
+        edad.setText("jLabel2");
+        getContentPane().add(edad, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 315, -1, -1));
+
+        provincia.setText("jLabel3");
+        getContentPane().add(provincia, new org.netbeans.lib.awtextra.AbsoluteConstraints(258, 347, -1, -1));
+
+        descripcion.setColumns(20);
+        descripcion.setRows(5);
+        txt.setViewportView(descripcion);
+
+        getContentPane().add(txt, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 380, 250, 120));
+
+        atrasBut.setText("Atras");
+        atrasBut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                atrasButActionPerformed(evt);
+            }
+        });
+        getContentPane().add(atrasBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 520, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void likeButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_likeButActionPerformed
         try {
+            if (!rs.isAfterLast()) {
+
+                Statement st2 = con.getConnection().createStatement();
+                ResultSet comprExist = st2.executeQuery("select id from matchh where id_usuario0 = '" + usu.getId() + "' and id_usuario1='" + rs.getInt("id") + "'");
+                if (comprExist.next()) {
+                    Statement st3 = con.getConnection().createStatement();
+                    ResultSet maxId = st3.executeQuery("select coalesce(max(id), -1) as maxId from mensajes");
+                    maxId.next();
+                    PreparedStatement insert = con.getConnection().prepareStatement("insert into mensajes (id,mensaje,id_usuario0,id_usuario1,url) values (?,?,?,?,?)");
+                    insert.setInt(1, maxId.getInt("maxId") + 1);
+                    insert.setString(2, "");
+                    insert.setInt(3, usu.getId());
+                    insert.setInt(4, rs.getInt("id"));
+                    insert.setString(5, null);
+                    insert.executeUpdate();
+                    insert.close();
+                    JOptionPane.showMessageDialog(null, "MATCH");
+                } else {
+                    Statement max = con.getConnection().createStatement();
+                    ResultSet maxId = max.executeQuery("select coalesce(max(id), -1) as maxId from matchh");
+                    maxId.next();
+                    PreparedStatement insert2 = con.getConnection().prepareStatement("insert into matchh (id,id_usuario0,id_usuario1) values (?,?,?)");
+                    insert2.setInt(1, maxId.getInt("maxId") + 1);
+                    insert2.setInt(2, rs.getInt("id"));
+                    insert2.setInt(3, usu.getId());
+                    insert2.executeUpdate();
+                    insert2.close();
+                    JOptionPane.showMessageDialog(null, "LIKE");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Has llegado al final");
+            }
+            rs.next();
+            siguienteInfo(usu);
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(match.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(match.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }//GEN-LAST:event_likeButActionPerformed
+
+    private void DislikeButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DislikeButActionPerformed
+        try {
             if (rs.isLast() == false) {
                 rs.next();
-                siguienteImagen(usu);
+                siguienteInfo(usu);
             } else {
                 JOptionPane.showMessageDialog(null, "Has llegado al final");
             }
@@ -163,8 +263,13 @@ public class match extends javax.swing.JFrame {
         } catch (IOException ex) {
             Logger.getLogger(match.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }//GEN-LAST:event_DislikeButActionPerformed
 
-    }//GEN-LAST:event_likeButActionPerformed
+    private void atrasButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atrasButActionPerformed
+        menuPrincipal menu = new menuPrincipal(usu);
+        menu.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_atrasButActionPerformed
 
     /**
      * @param args the command line arguments
@@ -202,7 +307,14 @@ public class match extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton DislikeBut;
+    private javax.swing.JButton atrasBut;
+    private javax.swing.JTextArea descripcion;
+    private javax.swing.JLabel edad;
     private javax.swing.JLabel foto;
     private javax.swing.JButton likeBut;
+    private javax.swing.JLabel nick;
+    private javax.swing.JLabel provincia;
+    private javax.swing.JScrollPane txt;
     // End of variables declaration//GEN-END:variables
 }
