@@ -5,6 +5,8 @@
  */
 package proyectofinal;
 
+import ventanas.login;
+
 /**
  *
  * @author ADRI
@@ -15,6 +17,8 @@ public class Proyectofinal {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        login login= new login();
+        login.setVisible(true);
         
     }
     
