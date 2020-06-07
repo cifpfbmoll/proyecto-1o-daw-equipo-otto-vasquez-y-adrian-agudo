@@ -152,7 +152,7 @@ public class registro extends javax.swing.JFrame {
 
         jLabel14.setBackground(new java.awt.Color(0, 0, 0));
         jLabel14.setText("(YYYY/MM/DD)");
-        getContentPane().add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 220, -1, 30));
+        getContentPane().add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 210, -1, 50));
 
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Bisexual");
@@ -280,7 +280,7 @@ public class registro extends javax.swing.JFrame {
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 500, 300, 90));
 
         fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/loginverde.jpg"))); // NOI18N
-        getContentPane().add(fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, -210, 820, 1010));
+        getContentPane().add(fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -170, 820, 1010));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
